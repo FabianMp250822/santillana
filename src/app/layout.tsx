@@ -7,9 +7,63 @@ import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
 import { FavoritesProvider } from '@/providers/FavoritesProvider';
 import { LanguageProvider } from '@/providers/LanguageProvider';
 
+const baseUrl = 'https://santillana-del-mar-demo.com';
+
 export const metadata: Metadata = {
-  title: 'Santillana Del Mar',
-  description: 'Exclusive Real Estate Project',
+  metadataBase: new URL(baseUrl),
+  title: {
+    default: 'Santillana Del Mar - Exclusive Real Estate Project',
+    template: '%s | Santillana Del Mar',
+  },
+  description: 'Discover Santillana Del Mar, an exclusive real estate project in Cartagena, Colombia. Find luxury lots and properties for sale in a unique natural environment with premium amenities.',
+  keywords: [
+      'Santillana Del Mar',
+      'real estate Cartagena',
+      'luxury properties Colombia',
+      'lots for sale',
+      'exclusive community',
+      'investment properties',
+      'property in Cartagena',
+      'inmobiliaria Cartagena',
+      'propiedades de lujo',
+      'lotes en venta Colombia',
+      'comunidad exclusiva',
+      'inversión inmobiliaria',
+      'bienes raíces en Cartagena',
+  ],
+  openGraph: {
+    title: 'Santillana Del Mar - Exclusive Real Estate Project',
+    description: 'Discover a sanctuary where luxury meets nature in Cartagena, Colombia.',
+    url: baseUrl,
+    siteName: 'Santillana Del Mar',
+    images: [
+      {
+        url: 'https://placehold.co/1200x630.png',
+        width: 1200,
+        height: 630,
+        alt: 'Aerial view of Santillana Del Mar project',
+      },
+    ],
+    locale: 'es_CO',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Santillana Del Mar - Exclusive Real Estate Project',
+    description: 'Discover a sanctuary where luxury meets nature in Cartagena, Colombia.',
+    images: ['https://placehold.co/1200x630.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 export default function RootLayout({
