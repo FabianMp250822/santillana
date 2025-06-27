@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTranslation } from '@/hooks/use-translation';
 import { ShieldCheck, Trees, Flame, Dribbble, Puzzle, Bike } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 const features = [
@@ -45,16 +44,17 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
-      <section className="relative h-[60vh] md:h-[80vh] w-full flex items-center justify-center text-center text-white">
-        <Image
-          src="https://placehold.co/1920x1080.png"
-          alt="Aerial view of Santillana Del Mar"
-          data-ai-hint="aerial view real estate"
-          layout="fill"
-          objectFit="cover"
-          className="z-0 brightness-50"
-          priority
-        />
+      <section className="relative h-[60vh] md:h-[80vh] w-full flex items-center justify-center text-center text-white overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        >
+          <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-black/50 z-5"></div>
         <div className="relative z-10 p-4 max-w-4xl">
           <h1 className="font-headline text-4xl md:text-6xl lg:text-7xl font-bold text-shadow-lg">
             {t('homeHeroTitle')}
