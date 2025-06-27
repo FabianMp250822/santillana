@@ -65,7 +65,7 @@ export const translations = {
     workingHours: 'Working Hours',
     workingHours_Weekdays: 'Monday - Friday: 9:00 AM - 6:00 PM',
     workingHours_Saturday: 'Saturday: 10:00 AM - 4:00 PM',
-    workingHours_Sunday: 'Sunday: By appointment only',
+    workingHours_Sunday: 'By appointment only',
     contactFormTitle: 'Send us a Message',
     contactFormSubtitle: 'Fill out the form below and our team will be in touch.',
     formNameLabel: 'Full Name',
@@ -83,6 +83,9 @@ export const translations = {
     formErrorEmail: 'Please enter a valid email address.',
     formErrorPhone: 'Please enter a valid phone number.',
     formErrorMessage: 'Message must be at least 10 characters.',
+    formSendingButton: 'Sending...',
+    formErrorTitle: 'Error',
+    formErrorDesc: 'There was a problem sending your message. Please try again later.',
 
     // Favorites Page
     favoritesTitle: 'My Favorites',
@@ -271,6 +274,9 @@ export const translations = {
     formErrorEmail: 'Por favor, introduce una dirección de correo electrónico válida.',
     formErrorPhone: 'Por favor, introduce un número de teléfono válido.',
     formErrorMessage: 'El mensaje debe tener al menos 10 caracteres.',
+    formSendingButton: 'Enviando...',
+    formErrorTitle: 'Error',
+    formErrorDesc: 'Hubo un problema al enviar tu mensaje. Por favor, inténtalo de nuevo más tarde.',
 
     // Favorites Page
     favoritesTitle: 'Mis Favoritos',

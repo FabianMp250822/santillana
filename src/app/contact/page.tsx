@@ -18,10 +18,14 @@ import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useTranslation } from "@/hooks/use-translation";
+import { useState } from "react";
+import { db } from "@/lib/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 export default function ContactPage() {
   const { toast } = useToast();
   const t = useTranslation();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const formSchema = z.object({
     name: z.string().min(2, { message: t('formErrorName') }),
@@ -40,13 +44,28 @@ export default function ContactPage() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("Contact form submitted:", values);
-    toast({
-      title: t('toastMessageSentTitle'),
-      description: t('toastMessageSentDesc'),
-    });
-    form.reset();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
+    try {
+      await addDoc(collection(db, "contacts"), {
+        ...values,
+        createdAt: serverTimestamp(),
+      });
+      toast({
+        title: t('toastMessageSentTitle'),
+        description: t('toastMessageSentDesc'),
+      });
+      form.reset();
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      toast({
+        variant: "destructive",
+        title: t('formErrorTitle'),
+        description: t('formErrorDesc'),
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -150,7 +169,9 @@ export default function ContactPage() {
                         </FormItem>
                         )}
                     />
-                    <Button type="submit" className="w-full">{t('formSubmitButton')}</Button>
+                    <Button type="submit" className="w-full" disabled={isSubmitting}>
+                      {isSubmitting ? t('formSendingButton') : t('formSubmitButton')}
+                    </Button>
                     </form>
                 </Form>
             </CardContent>
