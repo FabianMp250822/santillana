@@ -39,8 +39,11 @@ const NavLink = ({ link, onClose }: NavLinkProps) => {
     <Link href={link.href} passHref>
       <SheetClose asChild>
         <Button
-          variant={isActive ? 'secondary' : 'ghost'}
-          className={cn("w-full justify-start text-base", isActive ? "text-primary-foreground" : "text-foreground")}
+          variant="ghost"
+          className={cn(
+            "w-full justify-start text-base text-white hover:bg-white/20",
+            isActive && "bg-accent/80"
+          )}
           onClick={onClose}
         >
           <link.icon className="mr-2 h-5 w-5" />
@@ -93,37 +96,54 @@ export function Header() {
                 <span className="sr-only">{t('openMenu')}</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-full max-w-xs bg-background p-4">
-              <div className="flex justify-between items-center mb-6">
-                <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2">
-                  <Home className="h-6 w-6 text-primary" />
-                  <span className="font-headline text-lg font-bold">Santillana Del Mar</span>
-                </Link>
-                 <SheetClose asChild>
-                    <Button variant="ghost" size="icon">
-                        <X className="h-6 w-6" />
-                        <span className="sr-only">{t('closeMenu')}</span>
-                    </Button>
-                </SheetClose>
-              </div>
-              <nav className="flex flex-col gap-2">
-                {navLinks.map((link) => (
-                  <NavLink key={link.href} link={link} onClose={() => setIsMobileMenuOpen(false)} />
-                ))}
-                 <div className="mt-4 border-t pt-4">
-                    <Link href="/profile" passHref>
-                        <SheetClose asChild>
-                            <Button variant="ghost" className="w-full justify-start text-base" onClick={() => setIsMobileMenuOpen(false)}>
-                                <User className="mr-2 h-5 w-5" /> {t('navProfile')}
-                            </Button>
-                        </SheetClose>
-                    </Link>
+            <SheetContent side="right" className="w-full max-w-xs p-0 border-0">
+                <div className="relative w-full h-full overflow-hidden">
+                    <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+                    >
+                        <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" type="video/mp4" />
+                    </video>
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-black/60 z-10" />
+
+                    {/* Content */}
+                    <div className="relative z-20 h-full flex flex-col p-4 text-white">
+                        <div className="flex justify-between items-center mb-6">
+                            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2">
+                            <Home className="h-6 w-6 text-primary" />
+                            <span className="font-headline text-lg font-bold">Santillana Del Mar</span>
+                            </Link>
+                            <SheetClose asChild>
+                                <Button variant="ghost" size="icon" className="text-white hover:bg-white/20">
+                                    <X className="h-6 w-6" />
+                                    <span className="sr-only">{t('closeMenu')}</span>
+                                </Button>
+                            </SheetClose>
+                        </div>
+                        <nav className="flex flex-col gap-2">
+                            {navLinks.map((link) => (
+                                <NavLink key={link.href} link={link} onClose={() => setIsMobileMenuOpen(false)} />
+                            ))}
+                            <div className="mt-4 border-t border-white/20 pt-4">
+                                <Link href="/profile" passHref>
+                                    <SheetClose asChild>
+                                        <Button variant="ghost" className="w-full justify-start text-base text-white hover:bg-white/20" onClick={() => setIsMobileMenuOpen(false)}>
+                                            <User className="mr-2 h-5 w-5" /> {t('navProfile')}
+                                        </Button>
+                                    </SheetClose>
+                                </Link>
+                            </div>
+                            <div className="flex gap-2 mt-4 justify-center">
+                                <Button size="sm" variant="ghost" className={cn("text-white", language === 'es' ? "bg-accent/80" : "hover:bg-white/20")} onClick={() => { setLanguage('es'); setIsMobileMenuOpen(false); }}>ES</Button>
+                                <Button size="sm" variant="ghost" className={cn("text-white", language === 'en' ? "bg-accent/80" : "hover:bg-white/20")} onClick={() => { setLanguage('en'); setIsMobileMenuOpen(false); }}>EN</Button>
+                            </div>
+                        </nav>
+                    </div>
                 </div>
-                 <div className="flex gap-2 mt-4 justify-center">
-                    <Button size="sm" variant={language === 'es' ? 'secondary' : 'ghost'} onClick={() => { setLanguage('es'); setIsMobileMenuOpen(false); }}>ES</Button>
-                    <Button size="sm" variant={language === 'en' ? 'secondary' : 'ghost'} onClick={() => { setLanguage('en'); setIsMobileMenuOpen(false); }}>EN</Button>
-                </div>
-              </nav>
             </SheetContent>
           </Sheet>
         </div>
