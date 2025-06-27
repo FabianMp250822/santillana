@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import { Heart, Share2 } from "lucide-react";
 import { useFavorites } from "@/hooks/use-favorites";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "@/hooks/use-translation";
 
 interface LotDetailSheetProps {
   lot: Lot | null;
@@ -18,6 +19,7 @@ interface LotDetailSheetProps {
 export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
   const { addFavorite, removeFavorite, isFavorite } = useFavorites();
   const { toast } = useToast();
+  const t = useTranslation();
 
   if (!lot) return null;
 
@@ -26,16 +28,16 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
   const handleFavoriteClick = () => {
     if (isFavorited) {
       removeFavorite(lot.id);
-      toast({ title: "Removed from Favorites", description: `Lot ${lot.id} has been removed from your favorites.` });
+      toast({ title: t('toastRemovedFromFavorites'), description: t('toastRemovedDesc').replace('{lotId}', lot.id) });
     } else {
       addFavorite(lot.id);
-      toast({ title: "Added to Favorites!", description: `Lot ${lot.id} has been added to your favorites.` });
+      toast({ title: t('toastAddedToFavorites'), description: t('toastAddedDesc').replace('{lotId}', lot.id) });
     }
   };
   
   const handleShareClick = () => {
     navigator.clipboard.writeText(`${window.location.origin}/map?lot=${lot.id}`);
-    toast({ title: "Link Copied!", description: "A shareable link to this lot has been copied to your clipboard." });
+    toast({ title: t('toastLinkCopied'), description: t('toastLotLinkCopied') });
   }
 
   const statusVariant: "default" | "secondary" | "destructive" | "outline" | null | undefined = 
@@ -48,21 +50,21 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
         <SheetHeader className="p-6">
           <div className="flex justify-between items-start">
             <div>
-                <SheetTitle className="font-headline text-3xl">Lot {lot.id}</SheetTitle>
+                <SheetTitle className="font-headline text-3xl">{t('lot')} {lot.id}</SheetTitle>
                 <SheetDescription className="text-lg">{lot.area} m²</SheetDescription>
             </div>
-            <Badge variant={statusVariant} className="text-sm">{lot.status}</Badge>
+            <Badge variant={statusVariant} className="text-sm">{t(lot.status.toLowerCase() as any)}</Badge>
           </div>
         </SheetHeader>
         <div className="px-6 pb-6">
-            <p className="text-muted-foreground">{lot.description}</p>
+            <p className="text-muted-foreground">{t(lot.descriptionKey)}</p>
         </div>
         <Carousel className="w-full">
           <CarouselContent>
             {lot.images.map((src, index) => (
               <CarouselItem key={index}>
                 <div className="aspect-video relative">
-                  <Image src={src} data-ai-hint="lot view" alt={`View of lot ${lot.id} #${index + 1}`} layout="fill" objectFit="cover" />
+                  <Image src={src} data-ai-hint="lot view" alt={`${t('lot')} ${lot.id} #${index + 1}`} layout="fill" objectFit="cover" />
                 </div>
               </CarouselItem>
             ))}
@@ -73,11 +75,11 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
         <div className="p-6 flex gap-4">
           <Button className="w-full" onClick={handleFavoriteClick}>
             <Heart className={`mr-2 h-5 w-5 ${isFavorited ? 'fill-current' : ''}`} />
-            {isFavorited ? "Favorited" : "Me Interesa"}
+            {isFavorited ? t('favorited') : t('imInterested')}
           </Button>
           <Button variant="outline" className="w-full" onClick={handleShareClick}>
             <Share2 className="mr-2 h-5 w-5" />
-            Share
+            {t('share')}
           </Button>
         </div>
       </SheetContent>

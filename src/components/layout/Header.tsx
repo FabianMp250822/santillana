@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -8,37 +7,44 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/s
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
+import { useLanguage } from '@/hooks/use-language';
+import { useTranslation } from '@/hooks/use-translation';
 
-const navLinks = [
-  { href: '/', label: 'Home', icon: Home },
-  { href: '/map', label: 'Map', icon: Map },
-  { href: '/gallery', label: 'Gallery', icon: Images },
-  { href: '/amenities', label: 'Amenities', icon: Sparkles },
-  { href: '/financing', label: 'Financing', icon: DollarSign },
-  { href: '/contact', label: 'Contact', icon: Mail },
+type NavLinkData = {
+  href: string;
+  labelKey: keyof typeof import('@/lib/translations').translations.en;
+  icon: LucideIcon;
+};
+
+const navLinks: NavLinkData[] = [
+  { href: '/', labelKey: 'navHome', icon: Home },
+  { href: '/map', labelKey: 'navMap', icon: Map },
+  { href: '/gallery', labelKey: 'navGallery', icon: Images },
+  { href: '/amenities', labelKey: 'navAmenities', icon: Sparkles },
+  { href: '/financing', labelKey: 'navFinancing', icon: DollarSign },
+  { href: '/contact', labelKey: 'navContact', icon: Mail },
 ];
 
 type NavLinkProps = {
-  href: string;
-  label: string;
-  icon: LucideIcon;
+  link: NavLinkData;
   onClose?: () => void;
 };
 
-const NavLink = ({ href, label, icon: Icon, onClose }: NavLinkProps) => {
+const NavLink = ({ link, onClose }: NavLinkProps) => {
   const pathname = usePathname();
-  const isActive = pathname === href;
+  const t = useTranslation();
+  const isActive = pathname === link.href;
 
   return (
-    <Link href={href} passHref>
+    <Link href={link.href} passHref>
       <SheetClose asChild>
         <Button
           variant={isActive ? 'secondary' : 'ghost'}
           className={cn("w-full justify-start text-base", isActive ? "text-primary-foreground" : "text-foreground")}
           onClick={onClose}
         >
-          <Icon className="mr-2 h-5 w-5" />
-          {label}
+          <link.icon className="mr-2 h-5 w-5" />
+          {t(link.labelKey)}
         </Button>
       </SheetClose>
     </Link>
@@ -48,6 +54,8 @@ const NavLink = ({ href, label, icon: Icon, onClose }: NavLinkProps) => {
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { language, setLanguage } = useLanguage();
+  const t = useTranslation();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -61,7 +69,7 @@ export function Header() {
         <nav className="hidden md:flex gap-1">
           {navLinks.map((link) => (
             <Link key={link.href} href={link.href} passHref>
-              <Button variant={pathname === link.href ? 'secondary' : 'ghost'}>{link.label}</Button>
+              <Button variant={pathname === link.href ? 'secondary' : 'ghost'}>{t(link.labelKey)}</Button>
             </Link>
           ))}
         </nav>
@@ -69,9 +77,11 @@ export function Header() {
         <div className="hidden md:flex items-center gap-2">
            <Button asChild>
                 <Link href="/profile">
-                    <User className="mr-2 h-4 w-4" /> Profile
+                    <User className="mr-2 h-4 w-4" /> {t('navProfile')}
                 </Link>
            </Button>
+           <Button size="sm" variant={language === 'es' ? 'secondary' : 'ghost'} onClick={() => setLanguage('es')}>ES</Button>
+            <Button size="sm" variant={language === 'en' ? 'secondary' : 'ghost'} onClick={() => setLanguage('en')}>EN</Button>
         </div>
 
         {/* Mobile Navigation */}
@@ -80,7 +90,7 @@ export function Header() {
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
                 <Menu className="h-6 w-6" />
-                <span className="sr-only">Open menu</span>
+                <span className="sr-only">{t('openMenu')}</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-full max-w-xs bg-background p-4">
@@ -92,22 +102,26 @@ export function Header() {
                  <SheetClose asChild>
                     <Button variant="ghost" size="icon">
                         <X className="h-6 w-6" />
-                        <span className="sr-only">Close menu</span>
+                        <span className="sr-only">{t('closeMenu')}</span>
                     </Button>
                 </SheetClose>
               </div>
               <nav className="flex flex-col gap-2">
                 {navLinks.map((link) => (
-                  <NavLink key={link.href} {...link} onClose={() => setIsMobileMenuOpen(false)} />
+                  <NavLink key={link.href} link={link} onClose={() => setIsMobileMenuOpen(false)} />
                 ))}
                  <div className="mt-4 border-t pt-4">
                     <Link href="/profile" passHref>
                         <SheetClose asChild>
                             <Button variant="ghost" className="w-full justify-start text-base" onClick={() => setIsMobileMenuOpen(false)}>
-                                <User className="mr-2 h-5 w-5" /> Profile
+                                <User className="mr-2 h-5 w-5" /> {t('navProfile')}
                             </Button>
                         </SheetClose>
                     </Link>
+                </div>
+                 <div className="flex gap-2 mt-4 justify-center">
+                    <Button size="sm" variant={language === 'es' ? 'secondary' : 'ghost'} onClick={() => { setLanguage('es'); setIsMobileMenuOpen(false); }}>ES</Button>
+                    <Button size="sm" variant={language === 'en' ? 'secondary' : 'ghost'} onClick={() => { setLanguage('en'); setIsMobileMenuOpen(false); }}>EN</Button>
                 </div>
               </nav>
             </SheetContent>

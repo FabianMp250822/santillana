@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { type Lot, type LotStatus } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface InteractiveMapProps {
   lots: Lot[];
@@ -18,6 +19,7 @@ const statusColors: Record<LotStatus, string> = {
 };
 
 export function InteractiveMap({ lots, selectedLot, onSelectLot }: InteractiveMapProps) {
+  const t = useTranslation();
   return (
     <div className="w-full aspect-video relative bg-card rounded-lg shadow-lg overflow-hidden border">
       <Image
@@ -47,9 +49,9 @@ export function InteractiveMap({ lots, selectedLot, onSelectLot }: InteractiveMa
                     />
                 </TooltipTrigger>
                 <TooltipContent className='font-sans'>
-                    <p className='font-bold'>Lot {lot.id}</p>
-                    <p>Status: {lot.status}</p>
-                    <p>Area: {lot.area} m²</p>
+                    <p className='font-bold'>{t('lot')} {lot.id}</p>
+                    <p>{t('status')}: {t(lot.status.toLowerCase() as any)}</p>
+                    <p>{t('area')}: {lot.area} m²</p>
                 </TooltipContent>
             </Tooltip>
             ))}
@@ -57,9 +59,9 @@ export function InteractiveMap({ lots, selectedLot, onSelectLot }: InteractiveMa
       </svg>
       <div className="absolute bottom-4 right-4 bg-background/80 p-3 rounded-lg border">
         <ul className="space-y-2 text-sm">
-            <li className="flex items-center"><span className="w-4 h-4 rounded-full bg-green-500/80 mr-2"></span> Available</li>
-            <li className="flex items-center"><span className="w-4 h-4 rounded-full bg-yellow-500/80 mr-2"></span> Reserved</li>
-            <li className="flex items-center"><span className="w-4 h-4 rounded-full bg-red-500/80 mr-2"></span> Sold</li>
+            <li className="flex items-center"><span className="w-4 h-4 rounded-full bg-green-500/80 mr-2"></span> {t('available')}</li>
+            <li className="flex items-center"><span className="w-4 h-4 rounded-full bg-yellow-500/80 mr-2"></span> {t('reserved')}</li>
+            <li className="flex items-center"><span className="w-4 h-4 rounded-full bg-red-500/80 mr-2"></span> {t('sold')}</li>
         </ul>
       </div>
     </div>

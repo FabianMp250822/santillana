@@ -1,7 +1,7 @@
-
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/hooks/use-translation";
 
 const WhatsAppIcon = () => (
     <svg
@@ -15,8 +15,9 @@ const WhatsAppIcon = () => (
   );
 
 export function WhatsAppButton() {
+    const t = useTranslation();
     const phoneNumber = "573015888282";
-    const message = encodeURIComponent("Hola, estoy interesado en el proyecto Santillana del Mar y quisiera más información.");
+    const message = encodeURIComponent(t('whatsappMessage'));
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
     return (

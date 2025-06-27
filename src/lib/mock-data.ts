@@ -1,3 +1,6 @@
+import { type translations } from './translations';
+
+export type TranslationKey = keyof typeof translations.en;
 
 export type LotStatus = 'Available' | 'Reserved' | 'Sold';
 
@@ -7,7 +10,7 @@ export interface Lot {
   status: LotStatus;
   path: string; // SVG path data
   images: string[];
-  description: string;
+  descriptionKey: TranslationKey;
 }
 
 export const lots: Lot[] = [
@@ -17,7 +20,7 @@ export const lots: Lot[] = [
     status: 'Available',
     path: 'M50 50 L150 50 L150 150 L50 150 Z',
     images: ['https://placehold.co/600x400.png', 'https://placehold.co/600x400.png'],
-    description: 'Spacious corner lot with excellent views of the green areas. Ideal for a large family home.'
+    descriptionKey: 'lot_A01_desc'
   },
   {
     id: 'A-02',
@@ -25,7 +28,7 @@ export const lots: Lot[] = [
     status: 'Reserved',
     path: 'M160 50 L260 50 L260 150 L160 150 Z',
     images: ['https://placehold.co/600x400.png', 'https://placehold.co/600x400.png'],
-    description: 'Centrally located lot, close to the main amenities and club house.'
+    descriptionKey: 'lot_A02_desc'
   },
   {
     id: 'A-03',
@@ -33,7 +36,7 @@ export const lots: Lot[] = [
     status: 'Sold',
     path: 'M270 50 L370 50 L370 150 L270 150 Z',
     images: ['https://placehold.co/600x400.png', 'https://placehold.co/600x400.png'],
-    description: 'Premium lot with private access to the lakefront.'
+    descriptionKey: 'lot_A03_desc'
   },
   {
     id: 'B-01',
@@ -41,7 +44,7 @@ export const lots: Lot[] = [
     status: 'Available',
     path: 'M50 160 L150 160 L150 260 L50 260 Z',
     images: ['https://placehold.co/600x400.png', 'https://placehold.co/600x400.png'],
-    description: 'Quiet lot situated in a low-traffic area, perfect for tranquility.'
+    descriptionKey: 'lot_B01_desc'
   },
   {
     id: 'B-02',
@@ -49,7 +52,7 @@ export const lots: Lot[] = [
     status: 'Available',
     path: 'M160 160 L260 160 L260 260 L160 260 Z',
     images: ['https://placehold.co/600x400.png', 'https://placehold.co/600x400.png'],
-    description: 'Lot with a gentle slope, offering unique architectural possibilities.'
+    descriptionKey: 'lot_B02_desc'
   },
   {
     id: 'C-01',
@@ -57,111 +60,146 @@ export const lots: Lot[] = [
     status: 'Sold',
     path: 'M50 270 L150 270 L150 370 L50 370 Z',
     images: ['https://placehold.co/600x400.png', 'https://placehold.co/600x400.png'],
-    description: 'One of the largest lots in the project, offering ample space and privacy.'
+    descriptionKey: 'lot_C01_desc'
   },
 ];
 
-export const amenities = [
+interface Amenity {
+    key: string;
+    nameKey: TranslationKey;
+    descriptionKey: TranslationKey;
+    image: string;
+    hint: string;
+}
+
+export const amenities: Amenity[] = [
     {
-      name: 'Portería de Lujo',
-      description: 'An imposing entrance with 24/7 security that guarantees your peace of mind and that of your family, reflecting the status and exclusivity of the project.',
+      key: 'LuxuryGate',
+      nameKey: 'featureLuxuryGatehouseTitle',
+      descriptionKey: 'amenityLuxuryGate_Desc',
       image: 'https://placehold.co/800x600.png',
       hint: 'luxury gate security'
     },
     {
-      name: '2 Islas Privadas',
-      description: 'Escape to your own paradise. Two exclusive islands for residents, perfect for relaxation, private events, or simply enjoying nature at its best.',
+      key: 'PrivateIslands',
+      nameKey: 'featurePrivateIslandsTitle',
+      descriptionKey: 'amenityPrivateIslands_Desc',
       image: 'https://placehold.co/800x600.png',
       hint: 'private island tropical'
     },
     {
-      name: 'Zonas de BBQ',
-      description: 'Spaces designed for family and social entertainment. Equipped with everything you need to enjoy barbecues and outdoor gatherings.',
+      key: 'BBQAreas',
+      nameKey: 'featureBBQAreasTitle',
+      descriptionKey: 'amenityBBQ_Desc',
       image: 'https://placehold.co/800x600.png',
       hint: 'bbq area family'
     },
     {
-      name: 'Cancha de Tenis',
-      description: 'For lovers of the sport, a tennis court with professional specifications, perfect for practicing and playing exciting matches.',
+      key: 'TennisCourt',
+      nameKey: 'amenityTennisCourt',
+      descriptionKey: 'amenityTennis_Desc',
       image: 'https://placehold.co/800x600.png',
       hint: 'tennis court sport'
     },
     {
-      name: 'Cancha Múltiple',
-      description: 'A versatile space for basketball, volleyball, and other sports. The meeting point for physical activity and community fun.',
+      key: 'MultiPurposeCourt',
+      nameKey: 'amenityMultiPurposeCourt',
+      descriptionKey: 'amenityMultiCourt_Desc',
       image: 'https://placehold.co/800x600.png',
       hint: 'basketball court sports'
     },
     {
-      name: 'Parque Infantil',
-      description: 'A safe and fun area for the little ones, where they can play, socialize, and create unforgettable memories in a natural environment.',
+      key: 'Playground',
+      nameKey: 'featurePlaygroundTitle',
+      descriptionKey: 'amenityPlayground_Desc',
       image: 'https://placehold.co/800x600.png',
       hint: 'playground park children'
     },
     {
-      name: 'Cicloruta',
-      description: 'Tour the project and its beautiful landscapes through an internal bike path, ideal for daily exercise, family walks, and connecting with nature.',
+      key: 'BikePath',
+      nameKey: 'featureBikePathGymTitle',
+      descriptionKey: 'amenityBikePath_Desc',
       image: 'https://placehold.co/800x600.png',
       hint: 'bike path nature'
     },
     {
-      name: 'Gimnasio Biosaludable',
-      description: 'Stay fit outdoors with our bio-healthy gym, equipped with machines for cardiovascular and strength exercises in a natural setting.',
+      key: 'OutdoorGym',
+      nameKey: 'amenityOutdoorGym_Desc',
+      descriptionKey: 'amenityOutdoorGym_Desc',
       image: 'https://placehold.co/800x600.png',
       hint: 'outdoor gym fitness'
     }
-  ];
+];
 
-export const galleryCategories = [
+interface GalleryImage {
+    src: string;
+    altKey: TranslationKey;
+    hint: string;
+}
+
+interface GalleryCategory {
+    key: string;
+    nameKey: TranslationKey;
+    images: GalleryImage[];
+}
+
+export const galleryCategories: GalleryCategory[] = [
     {
-      name: 'Aerial Views',
+      key: 'Aerial Views',
+      nameKey: 'galleryCatAerial',
       images: [
-        { src: 'https://placehold.co/800x600.png', alt: 'Aerial view of the entire project', hint: 'aerial project' },
-        { src: 'https://placehold.co/800x600.png', alt: 'Sunrise over the main lake', hint: 'sunrise lake' },
-        { src: 'https://placehold.co/800x600.png', alt: 'Lush green areas from above', hint: 'green aerial' },
+        { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_aerial_1_alt', hint: 'aerial project' },
+        { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_aerial_2_alt', hint: 'sunrise lake' },
+        { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_aerial_3_alt', hint: 'green aerial' },
       ],
     },
     {
-      name: 'Luxury Gate',
+      key: 'Luxury Gate',
+      nameKey: 'galleryCatGate',
       images: [
-        { src: 'https://placehold.co/800x600.png', alt: 'Main entrance gate at daytime', hint: 'luxury gate' },
-        { src: 'https://placehold.co/800x600.png', alt: 'Security booth and landscaping', hint: 'security entrance' },
+        { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_gate_1_alt', hint: 'luxury gate' },
+        { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_gate_2_alt', hint: 'security entrance' },
       ],
     },
     {
-      name: 'Private Islands',
+      key: 'Private Islands',
+      nameKey: 'galleryCatIslands',
       images: [
-        { src: 'https://placehold.co/800x600.png', alt: 'Bridge to a private island', hint: 'island bridge' },
-        { src: 'https://placehold.co/800x600.png', alt: 'Secluded beach on an island', hint: 'private beach' },
+        { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_islands_1_alt', hint: 'island bridge' },
+        { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_islands_2_alt', hint: 'private beach' },
       ],
     },
     {
-      name: 'BBQ Areas',
+      key: 'BBQ Areas',
+      nameKey: 'galleryCatBBQ',
       images: [
-        { src: 'https://placehold.co/800x600.png', alt: 'Modern BBQ pit area', hint: 'modern bbq' },
-        { src: 'https://placehold.co/800x600.png', alt: 'Family enjoying a barbecue', hint: 'family barbecue' },
+        { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_bbq_1_alt', hint: 'modern bbq' },
+        { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_bbq_2_alt', hint: 'family barbecue' },
       ],
     },
     {
-        name: 'Sports Amenities',
+        key: 'Sports Amenities',
+        nameKey: 'galleryCatSports',
         images: [
-          { src: 'https://placehold.co/800x600.png', alt: 'Tennis courts', hint: 'tennis court' },
-          { src: 'https://placehold.co/800x600.png', alt: 'Basketball court', hint: 'basketball court' },
-          { src: 'https://placehold.co/800x600.png', alt: 'Cycling path through nature', hint: 'cycling path' },
+          { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_sports_1_alt', hint: 'tennis court' },
+          { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_sports_2_alt', hint: 'basketball court' },
+          { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_sports_3_alt', hint: 'cycling path' },
         ],
       },
       {
-        name: 'Family Areas',
+        key: 'Family Areas',
+        nameKey: 'galleryCatFamily',
         images: [
-          { src: 'https://placehold.co/800x600.png', alt: "Children's playground", hint: 'playground park' },
-          { src: 'https://placehold.co/800x600.png', alt: 'Community pool', hint: 'community pool' },
+          { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_family_1_alt', hint: 'playground park' },
+          { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_family_2_alt', hint: 'community pool' },
         ],
       },
       {
-        name: 'Nature and Environment',
+        key: 'Nature and Environment',
+        nameKey: 'galleryCatNature',
         images: [
-          { src: 'https://placehold.co/800x600.png', alt: 'Walking trail through the forest', hint: 'forest trail' },
-          { src: 'https://placehold.co/800x600.png', alt: 'View of the surrounding mountains', hint: 'mountain view' },
+          { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_nature_1_alt', hint: 'forest trail' },
+          { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_nature_2_alt', hint: 'mountain view' },
         ],
       },
   ];

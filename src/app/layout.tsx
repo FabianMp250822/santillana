@@ -5,6 +5,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
 import { FavoritesProvider } from '@/providers/FavoritesProvider';
+import { LanguageProvider } from '@/providers/LanguageProvider';
 
 export const metadata: Metadata = {
   title: 'Santillana Del Mar',
@@ -27,15 +28,17 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased bg-background text-foreground">
-        <FavoritesProvider>
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-grow">{children}</main>
-            <Footer />
-          </div>
-          <WhatsAppButton />
-          <Toaster />
-        </FavoritesProvider>
+        <LanguageProvider>
+          <FavoritesProvider>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-grow">{children}</main>
+              <Footer />
+            </div>
+            <WhatsAppButton />
+            <Toaster />
+          </FavoritesProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

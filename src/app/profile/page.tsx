@@ -1,10 +1,14 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useTranslation } from "@/hooks/use-translation";
 import { Heart, Mail, User } from "lucide-react";
 import Link from "next/link";
 
 export default function ProfilePage() {
+    const t = useTranslation();
     // Mock user data
     const user = {
         name: "Alex Doe",
@@ -15,9 +19,9 @@ export default function ProfilePage() {
     return (
         <div className="container mx-auto py-8 px-4">
             <div className="text-center mb-12">
-                <h1 className="font-headline text-4xl md:text-5xl font-bold">My Profile</h1>
+                <h1 className="font-headline text-4xl md:text-5xl font-bold">{t('profileTitle')}</h1>
                 <p className="mt-2 text-lg text-muted-foreground">
-                    Manage your information and saved lots.
+                    {t('profileSubtitle')}
                 </p>
             </div>
 
@@ -34,7 +38,7 @@ export default function ProfilePage() {
                         </CardHeader>
                         <CardContent className="text-center">
                             <Button variant="outline" asChild>
-                                <Link href="/login">Log Out</Link>
+                                <Link href="/login">{t('logOut')}</Link>
                             </Button>
                         </CardContent>
                     </Card>
@@ -43,16 +47,16 @@ export default function ProfilePage() {
                 <div className="md:col-span-2">
                     <Card>
                         <CardHeader>
-                            <CardTitle className="font-headline text-2xl">Dashboard</CardTitle>
-                            <CardDescription>Quick access to your activities and our services.</CardDescription>
+                            <CardTitle className="font-headline text-2xl">{t('dashboard')}</CardTitle>
+                            <CardDescription>{t('dashboardDesc')}</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <Link href="/favorites" className="block">
                                 <div className="flex items-center p-4 border rounded-lg hover:bg-card/80 transition-colors">
                                     <Heart className="h-6 w-6 mr-4 text-primary" />
                                     <div>
-                                        <h3 className="font-semibold">My Favorites</h3>
-                                        <p className="text-sm text-muted-foreground">View and manage your saved lots.</p>
+                                        <h3 className="font-semibold">{t('myFavorites')}</h3>
+                                        <p className="text-sm text-muted-foreground">{t('myFavoritesDesc')}</p>
                                     </div>
                                 </div>
                             </Link>
@@ -60,8 +64,8 @@ export default function ProfilePage() {
                                 <div className="flex items-center p-4 border rounded-lg hover:bg-card/80 transition-colors">
                                     <Mail className="h-6 w-6 mr-4 text-primary" />
                                     <div>
-                                        <h3 className="font-semibold">Contact Support</h3>
-                                        <p className="text-sm text-muted-foreground">Get help or ask a question.</p>
+                                        <h3 className="font-semibold">{t('contactSupport')}</h3>
+                                        <p className="text-sm text-muted-foreground">{t('contactSupportDesc')}</p>
                                     </div>
                                 </div>
                             </Link>
