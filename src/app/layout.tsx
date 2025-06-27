@@ -31,6 +31,11 @@ export const metadata: Metadata = {
       'inversión inmobiliaria',
       'bienes raíces en Cartagena',
   ],
+  icons: {
+    icon: 'https://i.ibb.co/5x8xbmtK/favicon.png',
+    shortcut: 'https://i.ibb.co/5x8xbmtK/favicon.png',
+    apple: 'https://i.ibb.co/5x8xbmtK/favicon.png',
+  },
   openGraph: {
     title: 'Santillana Del Mar - Exclusive Real Estate Project',
     description: 'Discover a sanctuary where luxury meets nature in Cartagena, Colombia.',
