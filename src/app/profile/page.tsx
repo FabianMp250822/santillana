@@ -27,10 +27,6 @@ export default function ProfilePage() {
     }, [user, loading, router]);
 
     const handleLogout = async () => {
-        if (!auth) {
-            toast({ variant: 'destructive', title: "Error", description: "Firebase is not configured." });
-            return;
-        }
         try {
             await signOut(auth);
             toast({ title: "Logged Out", description: "You have been successfully logged out." });

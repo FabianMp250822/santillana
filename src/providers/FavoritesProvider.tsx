@@ -29,8 +29,8 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 
         let unsubscribe: (() => void) | undefined;
 
-        if (user && db) {
-            // User is logged in and db is configured, use Firestore
+        if (user) {
+            // User is logged in, use Firestore
             const docRef = doc(db, 'users', user.uid);
             
             unsubscribe = onSnapshot(docRef, (docSnap) => {
@@ -56,7 +56,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
             });
             
         } else {
-            // User is logged out or db is not configured, use localStorage
+            // User is logged out, use localStorage
             setFavorites(getLocalFavorites());
         }
 
@@ -70,7 +70,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 
     const updateFavorites = async (newFavorites: string[]) => {
         setFavorites(newFavorites);
-        if (user && db) {
+        if (user) {
             const docRef = doc(db, 'users', user.uid);
             try {
                 await setDoc(docRef, { favorites: newFavorites }, { merge: true });

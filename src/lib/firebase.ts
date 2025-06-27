@@ -12,27 +12,21 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-let app: FirebaseApp | null = null;
-let db: Firestore | null = null;
-let auth: Auth | null = null;
-
-// Before initializing, check if the necessary config variables are provided.
-// This is to prevent the app from crashing if the .env file is not configured.
-if (firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId) {
-    try {
-        app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-        db = getFirestore(app);
-        auth = getAuth(app);
-    } catch (e) {
-        console.error("Error initializing Firebase. Please check your configuration in the .env file.", e);
-        // Ensure objects are null if initialization fails
-        app = null;
-        db = null;
-        auth = null;
-    }
-} else {
-    // This warning will be shown in the browser console if Firebase config is missing
-    console.warn("Firebase configuration is missing or incomplete. Please ensure all NEXT_PUBLIC_FIREBASE_* variables are set in your .env file. Firebase-dependent features will be disabled.");
+// Check for missing configuration variables.
+// This provides a clear error message to the developer if the .env file is not set up correctly.
+if (
+  !firebaseConfig.apiKey ||
+  !firebaseConfig.authDomain ||
+  !firebaseConfig.projectId
+) {
+  throw new Error(
+    "Firebase configuration is missing or incomplete. Please ensure all NEXT_PUBLIC_FIREBASE_* variables are set in your .env file."
+  );
 }
+
+// Initialize Firebase
+const app: FirebaseApp = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+const db: Firestore = getFirestore(app);
+const auth: Auth = getAuth(app);
 
 export { app, db, auth };
