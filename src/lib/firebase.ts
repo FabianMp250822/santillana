@@ -2,10 +2,9 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
-// --- URGENTE: REEMPLAZA ESTOS VALORES PARA CORREGIR EL ERROR ---
-// El error 'auth/configuration-not-found' ocurre porque los siguientes valores
-// son incorrectos o están vacíos. Debes reemplazarlos con las credenciales 
-// reales de tu proyecto de Firebase.
+// --- URGENTE: COMPLETA TU CONFIGURACIÓN DE FIREBASE AQUÍ ---
+// Para que la aplicación funcione, debes reemplazar los siguientes valores
+// de marcador de posición con las credenciales reales de tu proyecto de Firebase.
 //
 // Puedes encontrar estas claves en la Consola de Firebase:
 // 1. Ve a "Configuración del proyecto" (Project settings).
@@ -13,7 +12,7 @@ import { getAuth } from "firebase/auth";
 // 3. Selecciona tu aplicación web y verás el objeto de configuración 'firebaseConfig'.
 // 4. Copia los valores de allí y pégalos aquí.
 const firebaseConfig = {
-  apiKey: "PLACEHOLDER_REPLACE_WITH_YOUR_API_KEY",
+  apiKey: "AIzaSyBXvZBPAt2V6Op65fdmht9gTPSisN55-gE",
   authDomain: "PLACEHOLDER_REPLACE_WITH_YOUR_AUTH_DOMAIN",
   projectId: "PLACEHOLDER_REPLACE_WITH_YOUR_PROJECT_ID",
   storageBucket: "PLACEHOLDER_REPLACE_WITH_YOUR_STORAGE_BUCKET",
