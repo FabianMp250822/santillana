@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, createContext, ReactNode } from 'react';
@@ -37,11 +38,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const { user: anonymousUser } = await signInAnonymously(auth);
           setUser(anonymousUser);
         } catch (error: any) {
-          // This can happen if anonymous auth is disabled in the Firebase console.
-          // It's a valid runtime scenario, so we handle it gracefully.
-          console.warn(
-            "Firebase anonymous sign-in failed. This can happen if it's disabled in your Firebase project. Treating user as a guest.",
-            error.message
+          // Since the user has enabled anonymous auth, this error is almost certainly
+          // due to an incorrect Firebase config in the .env file.
+          console.error(
+            "CRITICAL: Firebase anonymous sign-in failed. The application will not be able to connect to the database or use AI features. Please check that your NEXT_PUBLIC_FIREBASE_* variables in the .env file are correct and match your Firebase project.",
+            "Original error:", error.message
           );
           setUser(null);
         } finally {

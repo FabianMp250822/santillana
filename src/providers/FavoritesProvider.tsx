@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, ReactNode, useEffect, useCallback } from "react";
@@ -52,9 +53,9 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
             }, (error) => {
                  let message = "Error with Firestore snapshot. Falling back to local favorites.";
                  if (error.message.includes('offline') || error.message.includes('unavailable')) {
-                     message = "Could not connect to database to sync favorites. This might be due to an incorrect Firebase project ID in your .env file or a network issue. Using local favorites for now.";
+                     message = "CRITICAL: Could not connect to the database to sync favorites. This usually means the NEXT_PUBLIC_FIREBASE_PROJECT_ID in your .env file is incorrect or there is a network issue. Favorites will not be saved to your account.";
                  }
-                 console.warn(message, error.message);
+                 console.error(message, "Original error:", error.message);
                  // Fallback to local if firestore fails
                  setFavorites(getLocalFavorites());
             });

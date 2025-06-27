@@ -1,3 +1,4 @@
+
 'use server';
 
 import { db, isFirebaseConfigured } from '@/lib/firebase';
@@ -44,7 +45,7 @@ export async function canGenerateDesign(userId: string): Promise<boolean> {
         return usageData.designCount < DAILY_DESIGN_LIMIT;
     } catch (error: any) {
         if (error.message.includes('offline') || error.message.includes('unavailable')) {
-            throw new Error("Could not check usage limits. This might be due to an incorrect Firebase project ID or network issues.");
+            throw new Error("Could not check usage limits. This is likely due to an incorrect Firebase Project ID in your .env file or a network issue.");
         }
         console.error("Error checking usage design:", error);
         throw new Error("An unexpected error occurred while checking usage limits.");

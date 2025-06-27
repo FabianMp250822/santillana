@@ -1,3 +1,4 @@
+
 "use client";
 
 import { z } from "zod";
@@ -68,7 +69,7 @@ export default function ContactPage() {
       console.error("Error adding document: ", error);
       let description = t('formErrorDesc');
       if (error.message.includes('offline') || error.message.includes('unavailable')) {
-        description = "Could not send message. This might be due to an incorrect Firebase project ID or a network issue. Please try again later.";
+        description = "Could not send message. This is likely due to an incorrect Firebase Project ID in your .env file or a network issue. Please check your configuration and try again.";
       }
       toast({
         variant: "destructive",
