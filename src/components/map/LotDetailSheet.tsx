@@ -12,6 +12,7 @@ import { Heart, Share2, Sparkles, Loader2 } from "lucide-react";
 import { useFavorites } from "@/hooks/use-favorites";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/hooks/use-translation";
+import { useAuth } from '@/hooks/use-auth';
 import { designHouse, type DesignHouseOutput } from '@/ai/flows/design-house-flow';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Separator } from '../ui/separator';
@@ -25,6 +26,7 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
   const { addFavorite, removeFavorite, isFavorite } = useFavorites();
   const { toast } = useToast();
   const t = useTranslation();
+  const { user, loading: authLoading } = useAuth();
 
   const [prompt, setPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -58,6 +60,10 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
   }
 
   const handleDesignHouse = async () => {
+    if (!user) {
+        toast({ variant: 'destructive', title: "Authentication Error", description: "Could not verify user. Please refresh and try again." });
+        return;
+    }
     if (!prompt.trim()) {
       toast({ variant: 'destructive', title: "Prompt is empty", description: "Please describe your dream house." });
       return;
@@ -65,11 +71,12 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
     setIsLoading(true);
     setAiResult(null);
     try {
-      const result = await designHouse({ lotId: lot.id, userPrompt: prompt });
+      const result = await designHouse({ lotId: lot.id, userPrompt: prompt, userId: user.uid });
       setAiResult(result);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      toast({ variant: 'destructive', title: "AI Designer Error", description: "Could not generate the house design. Please try again." });
+      const errorMessage = error.message || "Could not generate the house design. Please try again.";
+      toast({ variant: 'destructive', title: "AI Designer Error", description: errorMessage });
     } finally {
       setIsLoading(false);
     }
@@ -77,7 +84,8 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
 
   const statusVariant: "default" | "secondary" | "destructive" | "outline" | null | undefined = 
     lot.status === 'Available' ? 'default' : lot.status === 'Reserved' ? 'secondary' : 'destructive';
-
+  
+  const isDesignDisabled = isLoading || authLoading;
 
   return (
     <Sheet open={!!lot} onOpenChange={onOpenChange}>
@@ -128,16 +136,16 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
                             <Sparkles className="text-primary" />
                             AI House Designer
                         </CardTitle>
-                        <p className="text-sm text-muted-foreground">Describe your dream house and let our AI create a concept for you.</p>
+                        <p className="text-sm text-muted-foreground">Describe your dream house and let our AI create a concept for you. (2 free designs per day)</p>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <Textarea 
                             placeholder="e.g., A modern two-story house with a large pool and floor-to-ceiling windows..."
                             value={prompt}
                             onChange={(e) => setPrompt(e.target.value)}
-                            disabled={isLoading}
+                            disabled={isDesignDisabled}
                         />
-                        <Button className="w-full" onClick={handleDesignHouse} disabled={isLoading}>
+                        <Button className="w-full" onClick={handleDesignHouse} disabled={isDesignDisabled}>
                             {isLoading ? (
                                 <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -9,10 +9,12 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
+import { canGenerateDesign, recordDesignGeneration } from '@/services/usage-service';
 
 const DesignHouseInputSchema = z.object({
   userPrompt: z.string().describe('The user\'s description of their dream house.'),
   lotId: z.string().describe('The ID of the lot where the house will be designed.'),
+  userId: z.string().describe('The unique ID of the user requesting the design.'),
 });
 export type DesignHouseInput = z.infer<typeof DesignHouseInputSchema>;
 
@@ -46,6 +48,13 @@ const designHouseFlow = ai.defineFlow(
     outputSchema: DesignHouseOutputSchema,
   },
   async (input) => {
+    // 1. Check usage limit before proceeding
+    const canProceed = await canGenerateDesign(input.userId);
+    if (!canProceed) {
+        throw new Error('You have reached the maximum of 2 designs per day. Please try again tomorrow.');
+    }
+
+    // 2. Proceed with generation
     const [descriptionResponse, imageResponse] = await Promise.all([
         descriptionPrompt(input),
         ai.generate({
@@ -61,6 +70,9 @@ const designHouseFlow = ai.defineFlow(
     if (!imageUrl) {
         throw new Error('Image generation failed.');
     }
+    
+    // 3. Record the successful generation
+    await recordDesignGeneration(input.userId);
     
     return {
         description: descriptionResponse.text,
