@@ -29,7 +29,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 
         let unsubscribe: (() => void) | undefined;
 
-        if (user && db) {
+        if (user) {
             // User is logged in, use Firestore
             const docRef = doc(db, 'users', user.uid);
             
@@ -70,7 +70,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 
     const updateFavorites = async (newFavorites: string[]) => {
         setFavorites(newFavorites);
-        if (user && db) {
+        if (user) {
             const docRef = doc(db, 'users', user.uid);
             try {
                 await setDoc(docRef, { favorites: newFavorites }, { merge: true });

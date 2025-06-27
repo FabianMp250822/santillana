@@ -12,31 +12,35 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-let app: FirebaseApp | null = null;
-let auth: Auth | null = null;
-let db: Firestore | null = null;
+const varMap: { [key: string]: string } = {
+  apiKey: "NEXT_PUBLIC_FIREBASE_API_KEY",
+  authDomain: "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN",
+  projectId: "NEXT_PUBLIC_FIREBASE_PROJECT_ID",
+  storageBucket: "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET",
+  messagingSenderId: "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID",
+  appId: "NEXT_PUBLIC_FIREBASE_APP_ID",
+  measurementId: "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID"
+};
 
-// This flag is exported to be used anywhere in the app to check if Firebase is available.
-export let isFirebaseConfigured = false;
+const missingVars = Object.entries(firebaseConfig)
+  .filter(([, value]) => !value)
+  .map(([key]) => varMap[key]);
 
-// We check that all keys are present and have some value.
-// This is a robust way to prevent the "configuration-not-found" error.
-const allKeysPresent = Object.values(firebaseConfig).every(key => key);
-
-if (allKeysPresent) {
-  try {
-    app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    db = getFirestore(app);
-    isFirebaseConfigured = true;
-  } catch (e) {
-    console.error("Failed to initialize Firebase. Please check your .env configuration.", e);
-    // If initialization fails for any reason, ensure the flag is false.
-    isFirebaseConfigured = false;
-  }
-} else {
-  // You can add a console.warn here if you want to be notified in development
-  // that Firebase features are disabled due to missing configuration.
+if (missingVars.length > 0) {
+  throw new Error(
+    `Firebase configuration is missing. Please add the following environment variables to your .env file: ${missingVars.join(
+      ', '
+    )}`
+  );
 }
+
+// Initialize Firebase
+const app: FirebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const auth: Auth = getAuth(app);
+const db: Firestore = getFirestore(app);
+
+// This flag is still useful for components that might render on the server
+// without access to env vars, or for gracefully disabling UI elements.
+export const isFirebaseConfigured = true;
 
 export { app, auth, db };

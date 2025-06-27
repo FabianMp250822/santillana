@@ -2,7 +2,7 @@
 
 import { useState, useEffect, createContext, ReactNode } from 'react';
 import { onAuthStateChanged, User, signInAnonymously } from 'firebase/auth';
-import { auth, isFirebaseConfigured } from '@/lib/firebase';
+import { auth } from '@/lib/firebase';
 
 interface AuthContextType {
   user: User | null;
@@ -16,14 +16,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // If Firebase isn't configured, we can't do anything auth-related.
-    // Set user to null and finish loading. This prevents crashes.
-    if (!isFirebaseConfigured || !auth) {
-      setUser(null);
-      setLoading(false);
-      return;
-    }
-
+    // Since firebase.ts now throws a build-time error if not configured,
+    // we can assume 'auth' is a valid object here.
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         // User is signed in (either real or anonymous)
@@ -36,9 +30,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUser(anonymousUser);
         } catch (error: any) {
           // This can happen if anonymous auth is disabled in the Firebase console.
-          // We will log the error and treat the user as a guest.
+          // It's a valid runtime scenario, so we handle it gracefully.
           console.error(
-            "Firebase anonymous sign-in failed. This can happen if anonymous auth is disabled in the Firebase console.",
+            "Firebase anonymous sign-in failed. This can happen if it's disabled in your Firebase project. Treating user as a guest.",
             error.message
           );
           setUser(null);
