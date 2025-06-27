@@ -12,28 +12,22 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-const getFirebaseServices = () => {
-    const isConfigured = 
-        firebaseConfig.apiKey &&
-        firebaseConfig.authDomain &&
-        firebaseConfig.projectId;
+const isConfigured =
+    firebaseConfig.apiKey &&
+    firebaseConfig.authDomain &&
+    firebaseConfig.projectId;
 
-    if (!isConfigured) {
-        if (typeof window !== 'undefined') {
-            console.warn(
-                "Firebase configuration is missing or incomplete. " +
-                "Please ensure all NEXT_PUBLIC_FIREBASE_* variables are set in your .env file. " +
-                "Firebase-dependent features will be disabled."
-            );
-        }
-        return { app: null, auth: null, db: null, isFirebaseConfigured: false };
-    }
-
-    const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    return { app, auth, db, isFirebaseConfigured: true };
+if (!isConfigured && typeof window !== 'undefined') {
+    console.warn(
+        "Firebase configuration is missing or incomplete. " +
+        "Please ensure all NEXT_PUBLIC_FIREBASE_* variables are set in your .env file. " +
+        "Firebase-dependent features will be disabled."
+    );
 }
 
-export const { app, auth, db, isFirebaseConfigured } = getFirebaseServices();
+// Initialize Firebase only if the configuration is valid
+const app: FirebaseApp | null = isConfigured ? (!getApps().length ? initializeApp(firebaseConfig) : getApp()) : null;
+const auth: Auth | null = app ? getAuth(app) : null;
+const db: Firestore | null = app ? getFirestore(app) : null;
+
+export { app, auth, db, isConfigured as isFirebaseConfigured };
