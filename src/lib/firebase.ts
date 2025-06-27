@@ -12,26 +12,28 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-let app: FirebaseApp | null = null;
-let db: Firestore | null = null;
-let auth: Auth | null = null;
-let isFirebaseConfigured = false;
+const getFirebaseServices = () => {
+    const isConfigured = 
+        firebaseConfig.apiKey &&
+        firebaseConfig.authDomain &&
+        firebaseConfig.projectId;
 
-if (firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId) {
-  try {
-    app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-    db = getFirestore(app);
-    auth = getAuth(app);
-    isFirebaseConfigured = true;
-  } catch (e) {
-    console.error("Firebase initialization failed:", e);
-  }
-} else {
-  console.warn(
-    "Firebase configuration is missing or incomplete. " +
-    "Please ensure all NEXT_PUBLIC_FIREBASE_* variables are set in your .env file. " +
-    "Features like Login, Favorites sync, and AI Designer will be disabled."
-  );
+    if (!isConfigured) {
+        if (typeof window !== 'undefined') {
+            console.warn(
+                "Firebase configuration is missing or incomplete. " +
+                "Please ensure all NEXT_PUBLIC_FIREBASE_* variables are set in your .env file. " +
+                "Firebase-dependent features will be disabled."
+            );
+        }
+        return { app: null, auth: null, db: null, isFirebaseConfigured: false };
+    }
+
+    const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    return { app, auth, db, isFirebaseConfigured: true };
 }
 
-export { app, db, auth, isFirebaseConfigured };
+export const { app, auth, db, isFirebaseConfigured } = getFirebaseServices();

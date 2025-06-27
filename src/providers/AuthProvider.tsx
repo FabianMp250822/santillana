@@ -16,9 +16,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // This check is the gatekeeper for all Firebase auth operations.
+    // If the config is not available, we don't proceed.
     if (!isFirebaseConfigured || !auth) {
       setLoading(false);
-      // No firebase config, so we can't authenticate. User will be null.
       return;
     }
 
