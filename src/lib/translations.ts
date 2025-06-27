@@ -43,6 +43,9 @@ export const translations = {
     homeCTA_Subtitle: 'Ready to find your dream property? Our team is here to guide you every step of the way.',
     homeCTA_FinancingButton: 'Financing Options',
     homeCTA_ContactButton: 'Contact Us',
+    homeDistributionTitle: 'Discover Our Project Layout',
+    homeDistributionSubtitle: 'Watch this video to get a detailed view of the project\'s distribution and common areas.',
+    homeDistributionVideoTitle: 'Project Distribution Video',
 
     // Amenities Page
     amenitiesTitle: 'Exclusive Amenities',
@@ -234,6 +237,9 @@ export const translations = {
     homeCTA_Subtitle: '¿Listo para encontrar la propiedad de tus sueños? Nuestro equipo está aquí para guiarte en cada paso del camino.',
     homeCTA_FinancingButton: 'Opciones de Financiación',
     homeCTA_ContactButton: 'Contáctanos',
+    homeDistributionTitle: 'Descubre la Distribución del Proyecto',
+    homeDistributionSubtitle: 'Mira este video para obtener una vista detallada de la distribución del proyecto y las áreas comunes.',
+    homeDistributionVideoTitle: 'Video de Distribución del Proyecto',
 
     // Amenities Page
     amenitiesTitle: 'Amenidades Exclusivas',

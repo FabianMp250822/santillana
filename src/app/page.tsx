@@ -91,8 +91,29 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      
       <section className="py-16 md:py-24 bg-card">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="font-headline text-3xl md:text-4xl font-bold">{t('homeDistributionTitle')}</h2>
+            <p className="mt-2 text-lg text-muted-foreground max-w-3xl mx-auto">
+              {t('homeDistributionSubtitle')}
+            </p>
+          </div>
+          <div className="aspect-video max-w-5xl mx-auto rounded-lg overflow-hidden shadow-2xl border">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/e_JM_DNxtdE"
+              title={t('homeDistributionVideoTitle')}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24 bg-background">
          <div className="container mx-auto px-4 text-center">
             <h2 className="font-headline text-3xl md:text-4xl font-bold">{t('homeCTA_Title')}</h2>
             <p className="mt-2 text-lg text-muted-foreground max-w-2xl mx-auto">
