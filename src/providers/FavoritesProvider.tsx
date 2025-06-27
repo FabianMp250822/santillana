@@ -3,7 +3,7 @@
 import { useState, ReactNode, useEffect, useCallback } from "react";
 import { FavoritesContext, type FavoritesContextType } from "@/hooks/use-favorites";
 import { useAuth } from "@/hooks/use-auth";
-import { db } from "@/lib/firebase";
+import { db, isFirebaseConfigured } from "@/lib/firebase";
 import { doc, setDoc, onSnapshot } from "firebase/firestore";
 
 export function FavoritesProvider({ children }: { children: ReactNode }) {
@@ -29,8 +29,8 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 
         let unsubscribe: (() => void) | undefined;
 
-        if (user) {
-            // User is logged in, use Firestore
+        if (user && isFirebaseConfigured) {
+            // User is logged in and Firebase is configured, use Firestore
             const docRef = doc(db, 'users', user.uid);
             
             unsubscribe = onSnapshot(docRef, (docSnap) => {
@@ -56,7 +56,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
             });
             
         } else {
-            // User is a guest, use localStorage
+            // User is a guest or Firebase not configured, use localStorage
             setFavorites(getLocalFavorites());
         }
 
@@ -70,7 +70,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 
     const updateFavorites = async (newFavorites: string[]) => {
         setFavorites(newFavorites);
-        if (user) {
+        if (user && isFirebaseConfigured) {
             const docRef = doc(db, 'users', user.uid);
             try {
                 await setDoc(docRef, { favorites: newFavorites }, { merge: true });

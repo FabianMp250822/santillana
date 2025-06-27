@@ -19,7 +19,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useTranslation } from "@/hooks/use-translation";
 import { useState } from "react";
-import { db } from "@/lib/firebase";
+import { db, isFirebaseConfigured } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 export default function ContactPage() {
@@ -45,6 +45,14 @@ export default function ContactPage() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!isFirebaseConfigured) {
+        toast({
+            variant: "destructive",
+            title: "Firebase Not Configured",
+            description: "Cannot submit form. Please configure Firebase credentials.",
+        });
+        return;
+    }
     setIsSubmitting(true);
     try {
       await addDoc(collection(db, "contacts"), {

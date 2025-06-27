@@ -1,6 +1,6 @@
 'use server';
 
-import { db } from '@/lib/firebase';
+import { db, isFirebaseConfigured } from '@/lib/firebase';
 import { doc, getDoc, serverTimestamp, Timestamp, runTransaction } from 'firebase/firestore';
 
 const DAILY_DESIGN_LIMIT = 2;
@@ -17,7 +17,7 @@ interface UsageData {
  */
 export async function canGenerateDesign(userId: string): Promise<boolean> {
     // If the database isn't configured, deny the request.
-    if (!db) {
+    if (!isFirebaseConfigured) {
         console.warn("Usage check failed: Firebase (db) is not configured.");
         return false;
     }
@@ -51,7 +51,7 @@ export async function canGenerateDesign(userId: string): Promise<boolean> {
  */
 export async function recordDesignGeneration(userId: string): Promise<void> {
     // If the database isn't configured, do nothing.
-    if (!db) {
+    if (!isFirebaseConfigured) {
         console.warn("Usage recording failed: Firebase (db) is not configured.");
         return;
     }
