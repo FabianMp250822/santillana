@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { type Lot } from "@/lib/mock-data";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
@@ -27,6 +28,7 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
   const { toast } = useToast();
   const t = useTranslation();
   const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
 
   const [prompt, setPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -61,7 +63,12 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
 
   const handleDesignHouse = async () => {
     if (!user) {
-        toast({ variant: 'destructive', title: "Authentication Error", description: "Could not verify user. Please refresh and try again." });
+        toast({ 
+            variant: 'destructive', 
+            title: "Login Required", 
+            description: "Please log in or create an account to use the AI House Designer." 
+        });
+        router.push('/login');
         return;
     }
     if (!prompt.trim()) {
@@ -136,7 +143,12 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
                             <Sparkles className="text-primary" />
                             AI House Designer
                         </CardTitle>
-                        <p className="text-sm text-muted-foreground">Describe your dream house and let our AI create a concept for you. (2 free designs per day)</p>
+                        <p className="text-sm text-muted-foreground">
+                            {user 
+                                ? "Describe your dream house and let our AI create a concept for you. (2 free designs per day)"
+                                : "Log in to describe your dream house and let our AI create a concept for you."
+                            }
+                        </p>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <Textarea 
