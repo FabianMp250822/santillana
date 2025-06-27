@@ -16,6 +16,7 @@ import { useAuth } from '@/hooks/use-auth';
 import { designHouse, type DesignHouseOutput } from '@/ai/flows/design-house-flow';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Separator } from '../ui/separator';
+import { isFirebaseConfigured } from '@/lib/firebase';
 
 interface LotDetailSheetProps {
   lot: Lot | null;
@@ -60,7 +61,15 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
   }
 
   const handleDesignHouse = async () => {
-     if (!user) {
+     if (!isFirebaseConfigured) {
+        toast({
+            variant: 'destructive',
+            title: "AI Designer Unavailable",
+            description: "This feature is disabled due to a configuration issue."
+        });
+        return;
+    }
+    if (!user) {
         toast({
             variant: 'destructive',
             title: "Authentication Error",
@@ -89,7 +98,7 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
   const statusVariant: "default" | "secondary" | "destructive" | "outline" | null | undefined = 
     lot.status === 'Available' ? 'default' : lot.status === 'Reserved' ? 'secondary' : 'destructive';
   
-  const isDesignDisabled = isLoading || authLoading;
+  const isDesignDisabled = isLoading || authLoading || !isFirebaseConfigured;
 
   return (
     <Sheet open={!!lot} onOpenChange={onOpenChange}>
@@ -141,7 +150,7 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
                             AI House Designer
                         </CardTitle>
                         <p className="text-sm text-muted-foreground">
-                            Describe your dream house and let our AI create a concept for you. (2 free designs per day)
+                            {isFirebaseConfigured ? "Describe your dream house and let our AI create a concept for you. (2 free designs per day)" : "AI Designer is currently disabled due to a configuration issue."}
                         </p>
                     </CardHeader>
                     <CardContent className="space-y-4">

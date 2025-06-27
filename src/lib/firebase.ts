@@ -12,21 +12,26 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-// Check for missing configuration variables.
-// This provides a clear error message to the developer if the .env file is not set up correctly.
-if (
-  !firebaseConfig.apiKey ||
-  !firebaseConfig.authDomain ||
-  !firebaseConfig.projectId
-) {
-  throw new Error(
-    "Firebase configuration is missing or incomplete. Please ensure all NEXT_PUBLIC_FIREBASE_* variables are set in your .env file."
+let app: FirebaseApp | null = null;
+let db: Firestore | null = null;
+let auth: Auth | null = null;
+let isFirebaseConfigured = false;
+
+if (firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId) {
+  try {
+    app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+    db = getFirestore(app);
+    auth = getAuth(app);
+    isFirebaseConfigured = true;
+  } catch (e) {
+    console.error("Firebase initialization failed:", e);
+  }
+} else {
+  console.warn(
+    "Firebase configuration is missing or incomplete. " +
+    "Please ensure all NEXT_PUBLIC_FIREBASE_* variables are set in your .env file. " +
+    "Features like Login, Favorites sync, and AI Designer will be disabled."
   );
 }
 
-// Initialize Firebase
-const app: FirebaseApp = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const db: Firestore = getFirestore(app);
-const auth: Auth = getAuth(app);
-
-export { app, db, auth };
+export { app, db, auth, isFirebaseConfigured };

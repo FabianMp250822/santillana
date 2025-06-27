@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslation } from "@/hooks/use-translation";
 import { useAuth } from "@/hooks/use-auth";
-import { auth } from "@/lib/firebase";
+import { auth, isFirebaseConfigured } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import { Heart, Mail } from "lucide-react";
 import Link from "next/link";
@@ -21,12 +21,13 @@ export default function ProfilePage() {
     const { toast } = useToast();
 
     useEffect(() => {
-        if (!loading && !user) {
+        if (!loading && !user && isFirebaseConfigured) {
             router.push('/login');
         }
     }, [user, loading, router]);
 
     const handleLogout = async () => {
+        if (!isFirebaseConfigured || !auth) return;
         try {
             await signOut(auth);
             toast({ title: "Logged Out", description: "You have been successfully logged out." });
@@ -36,7 +37,7 @@ export default function ProfilePage() {
         }
     };
     
-    if (loading || !user) {
+    if (loading || (!user && isFirebaseConfigured)) {
         return (
             <div className="container mx-auto py-8 px-4">
                  <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -69,6 +70,19 @@ export default function ProfilePage() {
         )
     }
 
+    if (!user) {
+         // This case handles when firebase is not configured or user is anonymous
+         return (
+             <div className="container mx-auto py-16 px-4 text-center">
+                 <h1 className="font-headline text-4xl md:text-5xl font-bold">{t('profileTitle')}</h1>
+                 <p className="mt-4 text-lg text-muted-foreground">Please log in to view your profile.</p>
+                 <Button asChild className="mt-6">
+                     <Link href="/login">{t('navProfile')}</Link>
+                 </Button>
+             </div>
+         )
+    }
+
     const displayName = user.displayName || "User";
     const displayEmail = user.email || "No email provided";
     const avatarUrl = user.photoURL || `https://placehold.co/100x100.png`;
@@ -94,7 +108,7 @@ export default function ProfilePage() {
                             <CardDescription>{displayEmail}</CardDescription>
                         </CardHeader>
                         <CardContent className="text-center">
-                            <Button variant="outline" onClick={handleLogout}>
+                            <Button variant="outline" onClick={handleLogout} disabled={!isFirebaseConfigured}>
                                 {t('logOut')}
                             </Button>
                         </CardContent>

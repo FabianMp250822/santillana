@@ -14,7 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/hooks/use-translation";
 import { Facebook, Instagram } from "lucide-react";
-import { auth } from "@/lib/firebase";
+import { auth, isFirebaseConfigured } from "@/lib/firebase";
 import { 
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword,
@@ -49,6 +49,7 @@ export default function LoginPage() {
 
 
   const handleAuthAction = async (action: 'signIn' | 'signUp', data: LoginSchema) => {
+    if (!isFirebaseConfigured || !auth) return;
     setIsLoading(true);
     try {
       if (action === 'signIn') {
@@ -69,6 +70,7 @@ export default function LoginPage() {
   const onSignUpSubmit: SubmitHandler<LoginSchema> = (data) => handleAuthAction('signUp', data);
 
   const handleGoogleSignIn = async () => {
+    if (!isFirebaseConfigured || !auth) return;
     setIsLoading(true);
     const provider = new GoogleAuthProvider();
     try {
@@ -87,11 +89,11 @@ export default function LoginPage() {
         <Card className="w-full max-w-md">
             <CardHeader className="text-center">
                 <CardTitle className="font-headline text-3xl">{t('loginTitle')}</CardTitle>
-                <CardDescription>{t('loginSubtitle')}</CardDescription>
+                <CardDescription>{isFirebaseConfigured ? t('loginSubtitle') : "Login is currently disabled."}</CardDescription>
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">
-                    <Button variant="outline" className="w-full" onClick={handleGoogleSignIn} disabled={isLoading}>
+                    <Button variant="outline" className="w-full" onClick={handleGoogleSignIn} disabled={isLoading || !isFirebaseConfigured}>
                        <GoogleIcon /> Continue with Google
                     </Button>
                     <Button variant="outline" className="w-full" disabled>
@@ -110,22 +112,22 @@ export default function LoginPage() {
 
                 <Tabs defaultValue="signin" className="w-full" onValueChange={setActiveTab}>
                     <TabsList className="grid w-full grid-cols-2">
-                        <TabsTrigger value="signin">Sign In</TabsTrigger>
-                        <TabsTrigger value="signup">Sign Up</TabsTrigger>
+                        <TabsTrigger value="signin" disabled={!isFirebaseConfigured}>Sign In</TabsTrigger>
+                        <TabsTrigger value="signup" disabled={!isFirebaseConfigured}>Sign Up</TabsTrigger>
                     </TabsList>
                     <TabsContent value="signin">
                         <form onSubmit={handleSubmitSignIn(onSignInSubmit)} className="space-y-4 mt-4">
                             <div className="space-y-2">
                                 <Label htmlFor="signin-email">{t('loginEmailLabel')}</Label>
-                                <Input id="signin-email" type="email" placeholder="you@example.com" {...registerSignIn("email")} />
+                                <Input id="signin-email" type="email" placeholder="you@example.com" {...registerSignIn("email")} disabled={!isFirebaseConfigured}/>
                                 {errorsSignIn.email && <p className="text-destructive text-sm">{errorsSignIn.email.message}</p>}
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="signin-password">{t('loginPasswordLabel')}</Label>
-                                <Input id="signin-password" type="password" {...registerSignIn("password")} />
+                                <Input id="signin-password" type="password" {...registerSignIn("password")} disabled={!isFirebaseConfigured}/>
                                 {errorsSignIn.password && <p className="text-destructive text-sm">{errorsSignIn.password.message}</p>}
                             </div>
-                            <Button type="submit" className="w-full" disabled={isLoading}>
+                            <Button type="submit" className="w-full" disabled={isLoading || !isFirebaseConfigured}>
                                 {isLoading ? "Signing In..." : "Sign In"}
                             </Button>
                         </form>
@@ -134,15 +136,15 @@ export default function LoginPage() {
                         <form onSubmit={handleSubmitSignUp(onSignUpSubmit)} className="space-y-4 mt-4">
                             <div className="space-y-2">
                                 <Label htmlFor="signup-email">{t('loginEmailLabel')}</Label>
-                                <Input id="signup-email" type="email" placeholder="you@example.com" {...registerSignUp("email")} />
+                                <Input id="signup-email" type="email" placeholder="you@example.com" {...registerSignUp("email")} disabled={!isFirebaseConfigured}/>
                                 {errorsSignUp.email && <p className="text-destructive text-sm">{errorsSignUp.email.message}</p>}
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="signup-password">{t('loginPasswordLabel')}</Label>
-                                <Input id="signup-password" type="password" {...registerSignUp("password")} />
+                                <Input id="signup-password" type="password" {...registerSignUp("password")} disabled={!isFirebaseConfigured}/>
                                 {errorsSignUp.password && <p className="text-destructive text-sm">{errorsSignUp.password.message}</p>}
                             </div>
-                            <Button type="submit" className="w-full" disabled={isLoading}>
+                            <Button type="submit" className="w-full" disabled={isLoading || !isFirebaseConfigured}>
                                 {isLoading ? "Signing Up..." : "Sign Up"}
                             </Button>
                         </form>

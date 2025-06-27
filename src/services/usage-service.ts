@@ -1,6 +1,6 @@
 'use server';
 
-import { db } from '@/lib/firebase';
+import { db, isFirebaseConfigured } from '@/lib/firebase';
 import { doc, getDoc, serverTimestamp, Timestamp, runTransaction } from 'firebase/firestore';
 
 const DAILY_DESIGN_LIMIT = 2;
@@ -16,6 +16,11 @@ interface UsageData {
  * @returns A boolean indicating if generation is allowed.
  */
 export async function canGenerateDesign(userId: string): Promise<boolean> {
+    if (!isFirebaseConfigured || !db) {
+        console.warn("Usage service: Firebase not configured. Denying design generation.");
+        return false;
+    }
+
     const usageDocRef = doc(db, 'usage', userId);
     const docSnap = await getDoc(usageDocRef);
 
@@ -44,6 +49,11 @@ export async function canGenerateDesign(userId: string): Promise<boolean> {
  * @param userId The unique ID of the user.
  */
 export async function recordDesignGeneration(userId: string): Promise<void> {
+    if (!isFirebaseConfigured || !db) {
+        console.warn("Usage service: Firebase not configured. Skipping usage recording.");
+        return;
+    }
+    
     const usageDocRef = doc(db, 'usage', userId);
 
     try {
