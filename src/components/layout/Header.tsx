@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import { Home, Map, Images, User, Menu, X, LucideIcon, Sparkles, DollarSign, Mail } from 'lucide-react';
+import { Home, Map, Images, User, Menu, X, LucideIcon, Sparkles, DollarSign, Mail, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { usePathname } from 'next/navigation';
@@ -9,6 +9,8 @@ import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { useLanguage } from '@/hooks/use-language';
 import { useTranslation } from '@/hooks/use-translation';
+import { useAuth } from '@/hooks/use-auth';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type NavLinkData = {
   href: string;
@@ -59,6 +61,7 @@ export function Header() {
   const pathname = usePathname();
   const { language, setLanguage } = useLanguage();
   const t = useTranslation();
+  const { user, loading } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -78,11 +81,21 @@ export function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
-           <Button asChild>
+           {loading ? (
+             <Skeleton className="h-10 w-24" />
+           ) : user ? (
+            <Button asChild>
                 <Link href="/profile">
                     <User className="mr-2 h-4 w-4" /> {t('navProfile')}
                 </Link>
            </Button>
+           ) : (
+            <Button asChild variant="outline">
+                <Link href="/login">
+                    <LogIn className="mr-2 h-4 w-4" /> Login
+                </Link>
+            </Button>
+           )}
            <Button size="sm" variant={language === 'es' ? 'secondary' : 'ghost'} onClick={() => setLanguage('es')}>ES</Button>
             <Button size="sm" variant={language === 'en' ? 'secondary' : 'ghost'} onClick={() => setLanguage('en')}>EN</Button>
         </div>
@@ -129,13 +142,25 @@ export function Header() {
                                 <NavLink key={link.href} link={link} onClose={() => setIsMobileMenuOpen(false)} />
                             ))}
                             <div className="mt-4 border-t border-white/20 pt-4">
-                                <Link href="/profile" passHref>
-                                    <SheetClose asChild>
-                                        <Button variant="ghost" className="w-full justify-start text-base text-white hover:bg-white/20" onClick={() => setIsMobileMenuOpen(false)}>
-                                            <User className="mr-2 h-5 w-5" /> {t('navProfile')}
-                                        </Button>
-                                    </SheetClose>
-                                </Link>
+                                {loading ? (
+                                    <Skeleton className="h-10 w-full bg-white/20" />
+                                ) : user ? (
+                                    <Link href="/profile" passHref>
+                                        <SheetClose asChild>
+                                            <Button variant="ghost" className="w-full justify-start text-base text-white hover:bg-white/20" onClick={() => setIsMobileMenuOpen(false)}>
+                                                <User className="mr-2 h-5 w-5" /> {t('navProfile')}
+                                            </Button>
+                                        </SheetClose>
+                                    </Link>
+                                ) : (
+                                    <Link href="/login" passHref>
+                                        <SheetClose asChild>
+                                            <Button variant="ghost" className="w-full justify-start text-base text-white hover:bg-white/20" onClick={() => setIsMobileMenuOpen(false)}>
+                                                <LogIn className="mr-2 h-5 w-5" /> Login
+                                            </Button>
+                                        </SheetClose>
+                                    </Link>
+                                )}
                             </div>
                             <div className="flex gap-2 mt-4 justify-center">
                                 <Button size="sm" variant="ghost" className={cn("text-white", language === 'es' ? "bg-accent/80" : "hover:bg-white/20")} onClick={() => { setLanguage('es'); setIsMobileMenuOpen(false); }}>ES</Button>

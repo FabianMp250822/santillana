@@ -6,6 +6,7 @@ import { Footer } from '@/components/layout/Footer';
 import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
 import { FavoritesProvider } from '@/providers/FavoritesProvider';
 import { LanguageProvider } from '@/providers/LanguageProvider';
+import { AuthProvider } from '@/providers/AuthProvider';
 
 const baseUrl = 'https://santillana-del-mar-demo.com';
 
@@ -88,15 +89,17 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased bg-background text-foreground">
         <LanguageProvider>
-          <FavoritesProvider>
-            <div className="flex flex-col min-h-screen">
-              <Header />
-              <main className="flex-grow">{children}</main>
-              <Footer />
-            </div>
-            <WhatsAppButton />
-            <Toaster />
-          </FavoritesProvider>
+          <AuthProvider>
+            <FavoritesProvider>
+              <div className="flex flex-col min-h-screen">
+                <Header />
+                <main className="flex-grow">{children}</main>
+                <Footer />
+              </div>
+              <WhatsAppButton />
+              <Toaster />
+            </FavoritesProvider>
+          </AuthProvider>
         </LanguageProvider>
       </body>
     </html>
