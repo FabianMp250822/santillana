@@ -20,20 +20,28 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setIsMounted(true);
     const storedLang = localStorage.getItem('language') as Language;
+    let initialLang: Language;
+
     if (storedLang && ['en', 'es'].includes(storedLang)) {
-      setLanguage(storedLang);
+      initialLang = storedLang;
+    } else {
+      const browserLang = navigator.language.split('-')[0];
+      initialLang = browserLang === 'es' ? 'es' : 'en';
     }
+    setLanguage(initialLang);
+    document.documentElement.lang = initialLang;
   }, []);
 
   const setLanguageAndStore = (lang: Language) => {
     setLanguage(lang);
     if(isMounted) {
       localStorage.setItem('language', lang);
+      document.documentElement.lang = lang;
     }
   }
 
   const t = useCallback((key: keyof typeof translations.en, replacements?: Record<string, string>): string => {
-    let translation = translations[language][key] || translations['en'][key];
+    let translation = translations[language]?.[key] || translations['en'][key];
     if (replacements) {
       Object.keys(replacements).forEach(rKey => {
         translation = translation.replace(`{${rKey}}`, replacements[rKey]);
