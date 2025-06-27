@@ -45,15 +45,15 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       <section className="relative h-[60vh] md:h-[80vh] w-full flex items-center justify-center text-center text-white overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute top-0 left-0 w-full h-full object-cover z-0"
-        >
-          <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" type="video/mp4" />
-        </video>
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <iframe
+            className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2"
+            src="https://www.youtube.com/embed/ucOG85p3r5I?autoplay=1&mute=1&loop=1&playlist=ucOG85p3r5I&controls=0&playsinline=1&showinfo=0&autohide=1&modestbranding=1"
+            frameBorder="0"
+            allow="autoplay; encrypted-media"
+            title="Santillana Del Mar Video"
+          ></iframe>
+        </div>
         <div className="absolute inset-0 bg-black/50 z-5"></div>
         <div className="relative z-10 p-4 max-w-4xl">
           <h1 className="font-headline text-4xl md:text-6xl lg:text-7xl font-bold text-shadow-lg">
