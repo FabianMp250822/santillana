@@ -16,29 +16,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // This check is the gatekeeper for all Firebase auth operations.
-    // If the config is not available, we don't proceed.
+    // If firebase is not configured, we don't attempt any auth operations.
     if (!isFirebaseConfigured || !auth) {
       setLoading(false);
+      setUser(null); // Explicitly set user to null (guest)
       return;
     }
 
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
+        // User is already signed in (or was just signed in).
         setUser(currentUser);
+        setLoading(false);
       } else {
-        // User is signed out, sign them in anonymously
+        // User is signed out, attempt to sign them in anonymously.
         try {
           const { user: anonymousUser } = await signInAnonymously(auth);
           setUser(anonymousUser);
-        } catch (error) {
-          console.error("Anonymous sign-in failed. This can happen if it's disabled in your Firebase project. Treating user as a guest.", error);
-          setUser(null);
+        } catch (error: any) {
+          // This catch block is crucial for handling configuration errors gracefully.
+          console.error(
+            "Firebase anonymous sign-in failed. This can happen if your Firebase config in .env is incorrect, or if anonymous auth is disabled in the Firebase console.",
+            error.message
+          );
+          setUser(null); // Treat as a guest if anonymous sign-in fails.
+        } finally {
+            setLoading(false);
         }
       }
-      setLoading(false);
     });
 
     return () => unsubscribe();
@@ -48,6 +53,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider value={value}>
+      {/* We only render children once loading is complete to avoid flicker */}
       {!loading && children}
     </AuthContext.Provider>
   );
