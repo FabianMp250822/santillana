@@ -50,7 +50,11 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
                     window.localStorage.removeItem('favoriteLots');
                 }
             }, (error) => {
-                 console.error("Error with Firestore snapshot:", error);
+                 let message = "Error with Firestore snapshot. Falling back to local favorites.";
+                 if (error.message.includes('offline') || error.message.includes('unavailable')) {
+                     message = "Could not connect to database to sync favorites. This might be due to an incorrect Firebase project ID in your .env file or a network issue. Using local favorites for now.";
+                 }
+                 console.warn(message, error.message);
                  // Fallback to local if firestore fails
                  setFavorites(getLocalFavorites());
             });

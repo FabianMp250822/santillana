@@ -64,12 +64,16 @@ export default function ContactPage() {
         description: t('toastMessageSentDesc'),
       });
       form.reset();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error adding document: ", error);
+      let description = t('formErrorDesc');
+      if (error.message.includes('offline') || error.message.includes('unavailable')) {
+        description = "Could not send message. This might be due to an incorrect Firebase project ID or a network issue. Please try again later.";
+      }
       toast({
         variant: "destructive",
         title: t('formErrorTitle'),
-        description: t('formErrorDesc'),
+        description: description,
       });
     } finally {
       setIsSubmitting(false);

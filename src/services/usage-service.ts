@@ -16,32 +16,39 @@ interface UsageData {
  * @returns A boolean indicating if generation is allowed.
  */
 export async function canGenerateDesign(userId: string): Promise<boolean> {
-    // If the database isn't configured, deny the request.
     if (!isFirebaseConfigured) {
         console.warn("Usage check failed: Firebase (db) is not configured.");
         return false;
     }
 
     const usageDocRef = doc(db, 'usage', userId);
-    const docSnap = await getDoc(usageDocRef);
+    try {
+        const docSnap = await getDoc(usageDocRef);
 
-    if (!docSnap.exists()) {
-        return true; // No record, so they can generate.
+        if (!docSnap.exists()) {
+            return true; // No record, so they can generate.
+        }
+
+        const usageData = docSnap.data() as UsageData;
+        const now = Timestamp.now();
+        // Use toDate() only on a valid Timestamp object.
+        const lastDesignDate = usageData.lastDesignTimestamp.toDate();
+        const isMoreThan24Hours = (now.toMillis() - lastDesignDate.getTime()) > 24 * 60 * 60 * 1000;
+
+        // If it's been more than 24 hours, their limit is reset.
+        if (isMoreThan24Hours) {
+            return true;
+        }
+
+        // If within 24 hours, check the count.
+        return usageData.designCount < DAILY_DESIGN_LIMIT;
+    } catch (error: any) {
+        if (error.message.includes('offline') || error.message.includes('unavailable')) {
+            throw new Error("Could not check usage limits. This might be due to an incorrect Firebase project ID or network issues.");
+        }
+        console.error("Error checking usage design:", error);
+        throw new Error("An unexpected error occurred while checking usage limits.");
     }
-
-    const usageData = docSnap.data() as UsageData;
-    const now = Timestamp.now();
-    // Use toDate() only on a valid Timestamp object.
-    const lastDesignDate = usageData.lastDesignTimestamp.toDate();
-    const isMoreThan24Hours = (now.toMillis() - lastDesignDate.getTime()) > 24 * 60 * 60 * 1000;
-
-    // If it's been more than 24 hours, their limit is reset.
-    if (isMoreThan24Hours) {
-        return true;
-    }
-
-    // If within 24 hours, check the count.
-    return usageData.designCount < DAILY_DESIGN_LIMIT;
 }
 
 /**
@@ -91,9 +98,13 @@ export async function recordDesignGeneration(userId: string): Promise<void> {
                 });
             }
         });
-    } catch (e) {
-        console.error("Transaction failed to record usage: ", e);
-        // Don't throw an error to the user, just log it.
-        // Failing to record usage shouldn't block a successful generation.
+    } catch (e: any) {
+        // This is a non-critical background operation.
+        // We log a more specific warning but don't throw an error to the user.
+        if (e.message.includes('offline') || e.message.includes('unavailable')) {
+             console.warn("Could not record usage due to a network issue. This will not affect the current design generation.", e.message);
+        } else {
+            console.error("Transaction failed to record usage: ", e);
+        }
     }
 }
