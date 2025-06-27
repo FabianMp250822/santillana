@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, createContext, ReactNode } from 'react';
-import { onAuthStateChanged, User, signInAnonymously } from 'firebase/auth';
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth, isFirebaseConfigured } from '@/lib/firebase';
 
 interface AuthContextType {
@@ -23,27 +23,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser) {
-        // User is already signed in (or was just signed in).
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        // currentUser will be null if not logged in, which is the expected guest state.
         setUser(currentUser);
         setLoading(false);
-      } else {
-        // User is signed out, attempt to sign them in anonymously.
-        try {
-          const { user: anonymousUser } = await signInAnonymously(auth);
-          setUser(anonymousUser);
-        } catch (error: any) {
-          // This catch block is crucial for handling configuration errors gracefully.
-          console.error(
-            "Firebase anonymous sign-in failed. This can happen if your Firebase config in .env is incorrect, or if anonymous auth is disabled in the Firebase console.",
-            error.message
-          );
-          setUser(null); // Treat as a guest if anonymous sign-in fails.
-        } finally {
-            setLoading(false);
-        }
-      }
     });
 
     return () => unsubscribe();

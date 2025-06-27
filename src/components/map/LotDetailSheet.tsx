@@ -72,8 +72,8 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
     if (!user) {
         toast({
             variant: 'destructive',
-            title: "Authentication Error",
-            description: "Could not verify user. Please refresh and try again."
+            title: "Please Log In",
+            description: "You must be logged in to use the AI House Designer."
         });
         return;
     }
@@ -150,7 +150,7 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
                             AI House Designer
                         </CardTitle>
                         <p className="text-sm text-muted-foreground">
-                            {isFirebaseConfigured ? "Describe your dream house and let our AI create a concept for you. (2 free designs per day)" : "AI Designer is currently disabled due to a configuration issue."}
+                            {isFirebaseConfigured ? "Describe your dream house and let our AI create a concept for you. (2 free designs per day for logged in users)" : "AI Designer is currently disabled due to a configuration issue."}
                         </p>
                     </CardHeader>
                     <CardContent className="space-y-4">
