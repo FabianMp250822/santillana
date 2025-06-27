@@ -69,11 +69,13 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
         });
         return;
     }
+    // A user object (even anonymous) is required to track usage.
+    // If it's null, it means anonymous sign-in might have failed due to a config issue.
     if (!user) {
         toast({
             variant: 'destructive',
-            title: "Please Log In",
-            description: "You must be logged in to use the AI House Designer."
+            title: "AI Designer Temporarily Unavailable",
+            description: "Could not connect to the design service. Please try again later."
         });
         return;
     }
@@ -86,7 +88,7 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
     try {
       const result = await designHouse({ lotId: lot.id, userPrompt: prompt, userId: user.uid });
       setAiResult(result);
-    } catch (error: any) {
+    } catch (error: any) => {
       console.error(error);
       const errorMessage = error.message || "Could not generate the house design. Please try again.";
       toast({ variant: 'destructive', title: "AI Designer Error", description: errorMessage });
@@ -150,7 +152,7 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
                             AI House Designer
                         </CardTitle>
                         <p className="text-sm text-muted-foreground">
-                            {isFirebaseConfigured ? "Describe your dream house and let our AI create a concept for you. (2 free designs per day for logged in users)" : "AI Designer is currently disabled due to a configuration issue."}
+                            {isFirebaseConfigured ? "Describe your dream house and let our AI create a concept for you. (2 free designs per day for guests)" : "AI Designer is currently disabled due to a configuration issue."}
                         </p>
                     </CardHeader>
                     <CardContent className="space-y-4">
