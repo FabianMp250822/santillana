@@ -47,10 +47,7 @@ const designHouseFlow = ai.defineFlow(
   },
   async (input) => {
     const [descriptionResponse, imageResponse] = await Promise.all([
-        ai.generate({
-            prompt: await descriptionPrompt.render(input),
-            model: 'googleai/gemini-2.0-flash',
-        }),
+        descriptionPrompt(input),
         ai.generate({
             model: 'googleai/gemini-2.0-flash-preview-image-generation',
             prompt: `Concept art for a luxury, modern house in a tropical, exclusive real estate development called Santillana Del Mar. The design should be based on this idea: "${input.userPrompt}". The style should be photorealistic, architectural rendering.`,
