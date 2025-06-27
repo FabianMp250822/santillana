@@ -88,7 +88,7 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
     try {
       const result = await designHouse({ lotId: lot.id, userPrompt: prompt, userId: user.uid });
       setAiResult(result);
-    } catch (error: any) => {
+    } catch (error: any) {
       console.error(error);
       const errorMessage = error.message || "Could not generate the house design. Please try again.";
       toast({ variant: 'destructive', title: "AI Designer Error", description: errorMessage });
