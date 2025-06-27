@@ -16,6 +16,11 @@ interface UsageData {
  * @returns A boolean indicating if generation is allowed.
  */
 export async function canGenerateDesign(userId: string): Promise<boolean> {
+    if (!db) {
+        console.warn("Firestore not configured. Usage limit cannot be checked. Allowing generation.");
+        return true; // Fails open
+    }
+
     const usageDocRef = doc(db, 'usage', userId);
     const docSnap = await getDoc(usageDocRef);
 
@@ -44,6 +49,11 @@ export async function canGenerateDesign(userId: string): Promise<boolean> {
  * @param userId The unique ID of the user.
  */
 export async function recordDesignGeneration(userId: string): Promise<void> {
+    if (!db) {
+        console.warn("Firestore not configured. Usage cannot be recorded.");
+        return; // Fails silently
+    }
+    
     const usageDocRef = doc(db, 'usage', userId);
 
     try {

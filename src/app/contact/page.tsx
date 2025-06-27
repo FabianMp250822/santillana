@@ -46,6 +46,17 @@ export default function ContactPage() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
+    if (!db) {
+      console.error("Firestore is not configured. Cannot save contact message.");
+      toast({
+        variant: "destructive",
+        title: t('formErrorTitle'),
+        description: "The database is not configured. Please contact the administrator.",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       await addDoc(collection(db, "contacts"), {
         ...values,

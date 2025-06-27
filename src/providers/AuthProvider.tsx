@@ -16,6 +16,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // If Firebase is not configured, we can't do anything for authentication.
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         // User is signed in, see docs for a list of available properties
@@ -27,7 +33,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const { user: anonymousUser } = await signInAnonymously(auth);
           setUser(anonymousUser);
         } catch (error) {
-          console.error("Anonymous sign-in failed", error);
+          console.error("Anonymous sign-in failed. This can happen if it's disabled in your Firebase project. Treating user as a guest.", error);
+          setUser(null);
         }
       }
       setLoading(false);

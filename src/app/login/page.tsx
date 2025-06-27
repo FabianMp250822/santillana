@@ -49,6 +49,10 @@ export default function LoginPage() {
 
 
   const handleAuthAction = async (action: 'signIn' | 'signUp', data: LoginSchema) => {
+    if (!auth) {
+      toast({ variant: 'destructive', title: "Authentication Error", description: "Firebase is not configured." });
+      return;
+    }
     setIsLoading(true);
     try {
       if (action === 'signIn') {
@@ -69,6 +73,10 @@ export default function LoginPage() {
   const onSignUpSubmit: SubmitHandler<LoginSchema> = (data) => handleAuthAction('signUp', data);
 
   const handleGoogleSignIn = async () => {
+    if (!auth) {
+      toast({ variant: 'destructive', title: "Authentication Error", description: "Firebase is not configured." });
+      return;
+    }
     setIsLoading(true);
     const provider = new GoogleAuthProvider();
     try {
