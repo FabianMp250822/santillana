@@ -63,9 +63,9 @@ export default function ContactPage() {
             <div className="p-6 bg-card rounded-lg border">
                 <h3 className="font-headline text-2xl mb-4">{t('contactInfo')}</h3>
                 <div className="space-y-4 text-muted-foreground">
-                    <a href="tel:+573015888282" className="flex items-center gap-3 hover:text-primary transition-colors">
+                    <a href="tel:+573018698582" className="flex items-center gap-3 hover:text-primary transition-colors">
                         <Phone className="w-5 h-5 text-primary" />
-                        <span>+57 301 588 8282</span>
+                        <span>+57 301 869 8582</span>
                     </a>
                     <a href="mailto:gerenciacomercial@santillanadelmar.com" className="flex items-center gap-3 hover:text-primary transition-colors">
                         <Mail className="w-5 h-5 text-primary" />
