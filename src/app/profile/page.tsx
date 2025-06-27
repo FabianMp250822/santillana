@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslation } from "@/hooks/use-translation";
 import { useAuth } from "@/hooks/use-auth";
-import { auth, isFirebaseConfigured } from "@/lib/firebase";
+import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import { Heart, Mail } from "lucide-react";
 import Link from "next/link";
@@ -21,13 +21,12 @@ export default function ProfilePage() {
     const { toast } = useToast();
 
     useEffect(() => {
-        if (!loading && !user && isFirebaseConfigured) {
+        if (!loading && !user) {
             router.push('/login');
         }
     }, [user, loading, router]);
 
     const handleLogout = async () => {
-        if (!isFirebaseConfigured || !auth) return;
         try {
             await signOut(auth);
             toast({ title: "Logged Out", description: "You have been successfully logged out." });
@@ -37,7 +36,7 @@ export default function ProfilePage() {
         }
     };
     
-    if (loading || (!user && isFirebaseConfigured)) {
+    if (loading || !user) {
         return (
             <div className="container mx-auto py-8 px-4">
                  <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -70,8 +69,8 @@ export default function ProfilePage() {
         )
     }
 
+    // This check is unlikely to be hit due to the redirect, but serves as a fallback.
     if (!user) {
-         // This case handles when firebase is not configured or user is anonymous
          return (
              <div className="container mx-auto py-16 px-4 text-center">
                  <h1 className="font-headline text-4xl md:text-5xl font-bold">{t('profileTitle')}</h1>
@@ -108,7 +107,7 @@ export default function ProfilePage() {
                             <CardDescription>{displayEmail}</CardDescription>
                         </CardHeader>
                         <CardContent className="text-center">
-                            <Button variant="outline" onClick={handleLogout} disabled={!isFirebaseConfigured}>
+                            <Button variant="outline" onClick={handleLogout}>
                                 {t('logOut')}
                             </Button>
                         </CardContent>

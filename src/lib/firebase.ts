@@ -12,22 +12,22 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-const isConfigured =
-    firebaseConfig.apiKey &&
-    firebaseConfig.authDomain &&
-    firebaseConfig.projectId;
+// Check for missing environment variables. This is a hard requirement for the app to run.
+const missingConfigKeys = Object.entries(firebaseConfig)
+    .filter(([key, value]) => !value)
+    .map(([key]) => key);
 
-if (!isConfigured && typeof window !== 'undefined') {
-    console.warn(
-        "Firebase configuration is missing or incomplete. " +
-        "Please ensure all NEXT_PUBLIC_FIREBASE_* variables are set in your .env file. " +
-        "Firebase-dependent features will be disabled."
+if (missingConfigKeys.length > 0) {
+    throw new Error(
+        `Firebase configuration is missing or incomplete. ` +
+        `The following environment variables are not set in your .env file: ${missingConfigKeys.join(', ')}. ` +
+        `Please ensure all NEXT_PUBLIC_FIREBASE_* variables are set.`
     );
 }
 
-// Initialize Firebase only if the configuration is valid
-const app: FirebaseApp | null = isConfigured ? (!getApps().length ? initializeApp(firebaseConfig) : getApp()) : null;
-const auth: Auth | null = app ? getAuth(app) : null;
-const db: Firestore | null = app ? getFirestore(app) : null;
+const app: FirebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const auth: Auth = getAuth(app);
+const db: Firestore = getFirestore(app);
 
-export { app, auth, db, isConfigured as isFirebaseConfigured };
+// isFirebaseConfigured is now implicitly true if the app runs, so we don't export it.
+export { app, auth, db };
