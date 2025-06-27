@@ -47,7 +47,7 @@ export default function Home() {
       <section className="relative h-[60vh] md:h-[80vh] w-full flex items-center justify-center text-center text-white overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <iframe
-            className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2"
+            className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2"
             src="https://www.youtube.com/embed/ucOG85p3r5I?autoplay=1&mute=1&loop=1&playlist=ucOG85p3r5I&controls=0&playsinline=1&showinfo=0&autohide=1&modestbranding=1"
             frameBorder="0"
             allow="autoplay; encrypted-media"
