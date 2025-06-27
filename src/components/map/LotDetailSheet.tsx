@@ -16,6 +16,7 @@ import { useAuth } from '@/hooks/use-auth';
 import { designHouse, type DesignHouseOutput } from '@/ai/flows/design-house-flow';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Separator } from '../ui/separator';
+import { isFirebaseConfigured } from '@/lib/firebase';
 
 interface LotDetailSheetProps {
   lot: Lot | null;
@@ -64,8 +65,8 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
     if (!user) {
         toast({
             variant: 'destructive',
-            title: "AI Designer Temporarily Unavailable",
-            description: "Could not connect to the design service. Please try again later."
+            title: "Log in to use AI Designer",
+            description: "Please log in or sign up to create your own house designs."
         });
         return;
     }
@@ -90,7 +91,7 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
   const statusVariant: "default" | "secondary" | "destructive" | "outline" | null | undefined = 
     lot.status === 'Available' ? 'default' : lot.status === 'Reserved' ? 'secondary' : 'destructive';
   
-  const isDesignDisabled = isLoading || authLoading;
+  const isDesignDisabled = isLoading || authLoading || !isFirebaseConfigured;
 
   return (
     <Sheet open={!!lot} onOpenChange={onOpenChange}>
@@ -122,7 +123,7 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
             <CarouselNext className="right-4" />
             </Carousel>
             <div className="p-6 flex gap-4">
-            <Button className="w-full" onClick={handleFavoriteClick}>
+            <Button className="w-full" onClick={handleFavoriteClick} disabled={!isFirebaseConfigured}>
                 <Heart className={`mr-2 h-5 w-5 ${isFavorited ? 'fill-current' : ''}`} />
                 {isFavorited ? t('favorited') : t('imInterested')}
             </Button>
@@ -142,12 +143,12 @@ export function LotDetailSheet({ lot, onOpenChange }: LotDetailSheetProps) {
                             AI House Designer
                         </CardTitle>
                         <p className="text-sm text-muted-foreground">
-                            Describe your dream house and let our AI create a concept for you. (2 free designs per day for guests)
+                            {isFirebaseConfigured ? "Describe your dream house. (2 free designs per day for guests)" : "AI Designer is unavailable. Please ensure Firebase is configured in .env"}
                         </p>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <Textarea 
-                            placeholder="e.g., A modern two-story house with a large pool and floor-to-ceiling windows..."
+                            placeholder="e.g., A modern two-story house with a large pool..."
                             value={prompt}
                             onChange={(e) => setPrompt(e.target.value)}
                             disabled={isDesignDisabled}

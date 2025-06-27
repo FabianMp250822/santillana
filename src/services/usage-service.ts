@@ -16,6 +16,12 @@ interface UsageData {
  * @returns A boolean indicating if generation is allowed.
  */
 export async function canGenerateDesign(userId: string): Promise<boolean> {
+    // If the database isn't configured, deny the request.
+    if (!db) {
+        console.warn("Usage check failed: Firebase (db) is not configured.");
+        return false;
+    }
+
     const usageDocRef = doc(db, 'usage', userId);
     const docSnap = await getDoc(usageDocRef);
 
@@ -44,6 +50,11 @@ export async function canGenerateDesign(userId: string): Promise<boolean> {
  * @param userId The unique ID of the user.
  */
 export async function recordDesignGeneration(userId: string): Promise<void> {
+    // If the database isn't configured, do nothing.
+    if (!db) {
+        console.warn("Usage recording failed: Firebase (db) is not configured.");
+        return;
+    }
     const usageDocRef = doc(db, 'usage', userId);
 
     try {

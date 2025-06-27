@@ -12,22 +12,31 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-// Check for missing environment variables. This is a hard requirement for the app to run.
-const missingConfigKeys = Object.entries(firebaseConfig)
-    .filter(([key, value]) => !value)
-    .map(([key]) => key);
+let app: FirebaseApp | null = null;
+let auth: Auth | null = null;
+let db: Firestore | null = null;
 
-if (missingConfigKeys.length > 0) {
-    throw new Error(
-        `Firebase configuration is missing or incomplete. ` +
-        `The following environment variables are not set in your .env file: ${missingConfigKeys.join(', ')}. ` +
-        `Please ensure all NEXT_PUBLIC_FIREBASE_* variables are set.`
-    );
+// This flag is exported to be used anywhere in the app to check if Firebase is available.
+export let isFirebaseConfigured = false;
+
+// We check that all keys are present and have some value.
+// This is a robust way to prevent the "configuration-not-found" error.
+const allKeysPresent = Object.values(firebaseConfig).every(key => key);
+
+if (allKeysPresent) {
+  try {
+    app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    isFirebaseConfigured = true;
+  } catch (e) {
+    console.error("Failed to initialize Firebase. Please check your .env configuration.", e);
+    // If initialization fails for any reason, ensure the flag is false.
+    isFirebaseConfigured = false;
+  }
+} else {
+  // You can add a console.warn here if you want to be notified in development
+  // that Firebase features are disabled due to missing configuration.
 }
 
-const app: FirebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
-const auth: Auth = getAuth(app);
-const db: Firestore = getFirestore(app);
-
-// isFirebaseConfigured is now implicitly true if the app runs, so we don't export it.
 export { app, auth, db };

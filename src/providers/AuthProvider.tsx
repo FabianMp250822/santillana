@@ -2,7 +2,7 @@
 
 import { useState, useEffect, createContext, ReactNode } from 'react';
 import { onAuthStateChanged, User, signInAnonymously } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { auth, isFirebaseConfigured } from '@/lib/firebase';
 
 interface AuthContextType {
   user: User | null;
@@ -16,6 +16,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // If Firebase isn't configured, we can't do anything auth-related.
+    // Set user to null and finish loading. This prevents crashes.
+    if (!isFirebaseConfigured || !auth) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         // User is signed in (either real or anonymous)
@@ -28,6 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUser(anonymousUser);
         } catch (error: any) {
           // This can happen if anonymous auth is disabled in the Firebase console.
+          // We will log the error and treat the user as a guest.
           console.error(
             "Firebase anonymous sign-in failed. This can happen if anonymous auth is disabled in the Firebase console.",
             error.message
