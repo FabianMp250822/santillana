@@ -201,7 +201,7 @@ interface GalleryCategory {
 
 export const galleryCategories: GalleryCategory[] = [
     {
-      key: 'Aerial Views',
+      key: 'aerial',
       nameKey: 'galleryCatAerial',
       images: [
         { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_aerial_1_alt', hint: 'aerial project' },
@@ -210,7 +210,7 @@ export const galleryCategories: GalleryCategory[] = [
       ],
     },
     {
-      key: 'Luxury Gate',
+      key: 'gate',
       nameKey: 'galleryCatGate',
       images: [
         { src: 'https://i.ibb.co/VYNNnDtQ/porteria.jpg', altKey: 'gallery_img_gate_1_alt', hint: 'luxury gate' },
@@ -218,7 +218,7 @@ export const galleryCategories: GalleryCategory[] = [
       ],
     },
     {
-      key: 'Private Islands',
+      key: 'islands',
       nameKey: 'galleryCatIslands',
       images: [
         { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_islands_1_alt', hint: 'island bridge' },
@@ -226,7 +226,7 @@ export const galleryCategories: GalleryCategory[] = [
       ],
     },
     {
-      key: 'BBQ Areas',
+      key: 'bbq',
       nameKey: 'galleryCatBBQ',
       images: [
         { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_bbq_1_alt', hint: 'modern bbq' },
@@ -234,7 +234,7 @@ export const galleryCategories: GalleryCategory[] = [
       ],
     },
     {
-        key: 'Sports Amenities',
+        key: 'sports',
         nameKey: 'galleryCatSports',
         images: [
           { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_sports_1_alt', hint: 'tennis court' },
@@ -243,7 +243,7 @@ export const galleryCategories: GalleryCategory[] = [
         ],
       },
       {
-        key: 'Family Areas',
+        key: 'family',
         nameKey: 'galleryCatFamily',
         images: [
           { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_family_1_alt', hint: 'playground park' },
@@ -251,7 +251,7 @@ export const galleryCategories: GalleryCategory[] = [
         ],
       },
       {
-        key: 'Nature and Environment',
+        key: 'nature',
         nameKey: 'galleryCatNature',
         images: [
           { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_nature_1_alt', hint: 'forest trail' },
@@ -259,3 +259,4 @@ export const galleryCategories: GalleryCategory[] = [
         ],
       },
   ];
+
