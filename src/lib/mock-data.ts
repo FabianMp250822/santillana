@@ -77,7 +77,7 @@ export const amenities: Amenity[] = [
       key: 'LuxuryGate',
       nameKey: 'featureLuxuryGatehouseTitle',
       descriptionKey: 'amenityLuxuryGate_Desc',
-      image: 'https://placehold.co/800x600.png',
+      image: 'https://i.ibb.co/VYNNnDtQ/porteria.jpg',
       hint: 'luxury gate security'
     },
     {
@@ -213,8 +213,8 @@ export const galleryCategories: GalleryCategory[] = [
       key: 'Luxury Gate',
       nameKey: 'galleryCatGate',
       images: [
-        { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_gate_1_alt', hint: 'luxury gate' },
-        { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_gate_2_alt', hint: 'security entrance' },
+        { src: 'https://i.ibb.co/VYNNnDtQ/porteria.jpg', altKey: 'gallery_img_gate_1_alt', hint: 'luxury gate' },
+        { src: 'https://i.ibb.co/xS02g6Tm/porteria-dos.jpg', altKey: 'gallery_img_gate_2_alt', hint: 'security entrance' },
       ],
     },
     {
