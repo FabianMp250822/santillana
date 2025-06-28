@@ -197,6 +197,7 @@ export const translations = {
     gallery_img_sports_3_alt: 'Cycling path through nature',
     gallery_img_family_1_alt: "Children's playground",
     gallery_img_family_2_alt: 'Community pool',
+    gallery_img_family_3_alt: 'Poolside lounge area',
     gallery_img_nature_1_alt: 'Walking trail through the forest',
     gallery_img_nature_2_alt: 'View of the surrounding mountains',
 
@@ -465,6 +466,7 @@ export const translations = {
     gallery_img_sports_3_alt: 'Cicloruta a través de la naturaleza',
     gallery_img_family_1_alt: 'Parque infantil',
     gallery_img_family_2_alt: 'Piscina comunitaria',
+    gallery_img_family_3_alt: 'Área de descanso junto a la piscina',
     gallery_img_nature_1_alt: 'Sendero por el bosque',
     gallery_img_nature_2_alt: 'Vista de las montañas circundantes',
 

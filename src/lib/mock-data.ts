@@ -91,7 +91,7 @@ export const amenities: Amenity[] = [
       key: 'Pool',
       nameKey: 'amenityPool',
       descriptionKey: 'amenityPool_Desc',
-      image: 'https://placehold.co/800x600.png',
+      image: 'https://i.ibb.co/zV6tNF0V/picina-social-3.jpg',
       hint: 'family pool'
     },
     {
@@ -255,7 +255,8 @@ export const galleryCategories: GalleryCategory[] = [
         nameKey: 'galleryCatFamily',
         images: [
           { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_family_1_alt', hint: 'playground park' },
-          { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_family_2_alt', hint: 'community pool' },
+          { src: 'https://i.ibb.co/zV6tNF0V/picina-social-3.jpg', altKey: 'gallery_img_family_2_alt', hint: 'community pool' },
+          { src: 'https://i.ibb.co/9HQgndbC/picina-social-2.jpg', altKey: 'gallery_img_family_3_alt', hint: 'poolside lounge' },
         ],
       },
       {
@@ -267,6 +268,7 @@ export const galleryCategories: GalleryCategory[] = [
         ],
       },
   ];
+
 
 
 
