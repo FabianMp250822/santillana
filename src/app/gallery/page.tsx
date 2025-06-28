@@ -46,7 +46,7 @@ export default function GalleryPage() {
                 <Dialog key={index}>
                   <Card className="overflow-hidden group">
                     <CardContent className="p-0">
-                      <div className="aspect-w-4 aspect-h-3 relative">
+                      <div className="aspect-[4/3] relative">
                         <Image
                           src={image.src}
                           alt={t(image.altKey)}

@@ -35,7 +35,7 @@ export default function FavoritesPage() {
                     {favoriteLots.map(lot => (
                         <Card key={lot.id} className="flex flex-col">
                             <CardHeader>
-                                <div className="aspect-w-4 aspect-h-3 relative rounded-t-lg overflow-hidden">
+                                <div className="aspect-[4/3] relative rounded-t-lg overflow-hidden">
                                  <Image src={lot.images[0]} alt={`${t('lot')} ${lot.id}`} layout="fill" objectFit="cover" data-ai-hint="lot view" />
                                 </div>
                             </CardHeader>
