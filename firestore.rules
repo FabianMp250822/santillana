@@ -1,0 +1,24 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can only read and write their own data in the 'users' collection.
+    // This is used for storing favorites.
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Users can only read and write their own data in the 'usage' collection.
+    // This is used for tracking AI design generations.
+    match /usage/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Anyone can submit a message to the 'contacts' collection.
+    // We deny reads and updates/deletes to protect user privacy.
+    match /contacts/{contactId} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+  }
+}
