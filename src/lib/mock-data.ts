@@ -126,7 +126,7 @@ export const amenities: Amenity[] = [
       key: 'MultiPurposeCourt',
       nameKey: 'amenityMultiPurposeCourt',
       descriptionKey: 'amenityMultiCourt_Desc',
-      image: 'https://i.ibb.co/DfKs3xh8/recreacion.jpg',
+      image: 'https://i.ibb.co/fgVg9nn/unnamed.png',
       hint: 'basketball court sports'
     },
     {
@@ -245,7 +245,7 @@ export const galleryCategories: GalleryCategory[] = [
         key: 'sports',
         nameKey: 'galleryCatSports',
         images: [
-          { src: 'https://i.ibb.co/DfKs3xh8/recreacion.jpg', altKey: 'gallery_img_sports_1_alt', hint: 'sports court' },
+          { src: 'https://i.ibb.co/fgVg9nn/unnamed.png', altKey: 'gallery_img_sports_1_alt', hint: 'sports court' },
           { src: 'https://i.ibb.co/ZRVb3W4B/ginnacio-area-libre.jpg', altKey: 'gallery_img_sports_2_alt', hint: 'outdoor gym' },
           { src: 'https://i.ibb.co/HTDKqhFj/comedor-social.jpg', altKey: 'gallery_img_sports_3_alt', hint: 'social dining' },
         ],
@@ -268,6 +268,7 @@ export const galleryCategories: GalleryCategory[] = [
         ],
       },
   ];
+
 
 
 
