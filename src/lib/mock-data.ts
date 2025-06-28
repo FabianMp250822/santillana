@@ -154,7 +154,7 @@ export const amenities: Amenity[] = [
       key: 'PetPark',
       nameKey: 'amenityPetPark',
       descriptionKey: 'amenityPetPark_Desc',
-      image: 'https://placehold.co/800x600.png',
+      image: 'https://i.ibb.co/MxtdHbfD/parque-de-mascotas.jpg',
       hint: 'pet park dog'
     },
     {
@@ -268,6 +268,7 @@ export const galleryCategories: GalleryCategory[] = [
         ],
       },
   ];
+
 
 
 
