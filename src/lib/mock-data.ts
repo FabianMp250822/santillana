@@ -126,7 +126,7 @@ export const amenities: Amenity[] = [
       key: 'MultiPurposeCourt',
       nameKey: 'amenityMultiPurposeCourt',
       descriptionKey: 'amenityMultiCourt_Desc',
-      image: 'https://placehold.co/800x600.png',
+      image: 'https://i.ibb.co/DfKs3xh8/recreacion.jpg',
       hint: 'basketball court sports'
     },
     {
@@ -161,14 +161,14 @@ export const amenities: Amenity[] = [
       key: 'AcLounge',
       nameKey: 'amenityAcLounge',
       descriptionKey: 'amenityAcLounge_Desc',
-      image: 'https://placehold.co/800x600.png',
+      image: 'https://i.ibb.co/TxNzY4db/zona-social.jpg',
       hint: 'lounge interior modern'
     },
     {
       key: 'BioHealthyGym',
       nameKey: 'amenityBioHealthyGym',
       descriptionKey: 'amenityBioHealthyGym_Desc',
-      image: 'https://placehold.co/800x600.png',
+      image: 'https://i.ibb.co/ZRVb3W4B/ginnacio-area-libre.jpg',
       hint: 'outdoor gym'
     },
     {
@@ -237,9 +237,9 @@ export const galleryCategories: GalleryCategory[] = [
         key: 'sports',
         nameKey: 'galleryCatSports',
         images: [
-          { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_sports_1_alt', hint: 'tennis court' },
-          { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_sports_2_alt', hint: 'basketball court' },
-          { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_sports_3_alt', hint: 'cycling path' },
+          { src: 'https://i.ibb.co/DfKs3xh8/recreacion.jpg', altKey: 'gallery_img_sports_1_alt', hint: 'sports court' },
+          { src: 'https://i.ibb.co/ZRVb3W4B/ginnacio-area-libre.jpg', altKey: 'gallery_img_sports_2_alt', hint: 'outdoor gym' },
+          { src: 'https://i.ibb.co/TxNzY4db/zona-social.jpg', altKey: 'gallery_img_sports_3_alt', hint: 'social area' },
         ],
       },
       {
@@ -259,4 +259,5 @@ export const galleryCategories: GalleryCategory[] = [
         ],
       },
   ];
+
 
