@@ -30,7 +30,7 @@ export default function GalleryPage() {
 
       <Tabs defaultValue={galleryCategories[0].key} className="w-full">
         <div className="flex justify-center mb-6">
-          <TabsList className="grid w-full max-w-4xl grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
+          <TabsList className="grid w-full max-w-5xl grid-cols-2 md:grid-cols-4 lg:grid-cols-8">
             {galleryCategories.map((category) => (
               <TabsTrigger key={category.key} value={category.key}>
                 {t(category.nameKey)}
@@ -41,48 +41,61 @@ export default function GalleryPage() {
 
         {galleryCategories.map((category) => (
           <TabsContent key={category.key} value={category.key}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {category.images.map((image, index) => (
-                <Dialog key={index}>
-                  <Card className="overflow-hidden group">
-                    <CardContent className="p-0">
-                      <div className="aspect-[4/3] relative">
-                        <Image
-                          src={image.src}
-                          alt={t(image.altKey)}
-                          data-ai-hint={image.hint}
-                          layout="fill"
-                          objectFit="cover"
-                          className="transition-transform duration-300 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
-                           <DialogTrigger asChild>
-                            <Button variant="secondary" size="icon">
-                                <Expand className="h-5 w-5" />
-                                <span className="sr-only">{t('expand')}</span>
+            {category.videoUrl ? (
+                <div className="aspect-video max-w-4xl mx-auto rounded-lg overflow-hidden shadow-2xl border">
+                    <iframe
+                    className="w-full h-full"
+                    src={category.videoUrl}
+                    title={t(category.videoTitleKey!)}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    ></iframe>
+                </div>
+            ) : category.images ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {category.images.map((image, index) => (
+                    <Dialog key={index}>
+                    <Card className="overflow-hidden group">
+                        <CardContent className="p-0">
+                        <div className="aspect-[4/3] relative">
+                            <Image
+                            src={image.src}
+                            alt={t(image.altKey)}
+                            data-ai-hint={image.hint}
+                            layout="fill"
+                            objectFit="cover"
+                            className="transition-transform duration-300 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
+                            <DialogTrigger asChild>
+                                <Button variant="secondary" size="icon">
+                                    <Expand className="h-5 w-5" />
+                                    <span className="sr-only">{t('expand')}</span>
+                                </Button>
+                            </DialogTrigger>
+                            <Button variant="secondary" size="icon" onClick={handleShareClick}>
+                                <Share2 className="h-5 w-5" />
+                                <span className="sr-only">{t('share')}</span>
                             </Button>
-                           </DialogTrigger>
-                          <Button variant="secondary" size="icon" onClick={handleShareClick}>
-                            <Share2 className="h-5 w-5" />
-                            <span className="sr-only">{t('share')}</span>
-                          </Button>
+                            </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                  <DialogContent className="max-w-4xl p-0 border-0">
-                      <Image
-                          src={image.src}
-                          alt={t(image.altKey)}
-                          data-ai-hint={image.hint}
-                          width={1200}
-                          height={800}
-                          className="rounded-lg w-full h-auto"
-                        />
-                  </DialogContent>
-                </Dialog>
-              ))}
-            </div>
+                        </CardContent>
+                    </Card>
+                    <DialogContent className="max-w-4xl p-0 border-0">
+                        <Image
+                            src={image.src}
+                            alt={t(image.altKey)}
+                            data-ai-hint={image.hint}
+                            width={1200}
+                            height={800}
+                            className="rounded-lg w-full h-auto"
+                            />
+                    </DialogContent>
+                    </Dialog>
+                ))}
+                </div>
+            ) : null}
           </TabsContent>
         ))}
       </Tabs>

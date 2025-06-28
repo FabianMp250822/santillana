@@ -171,6 +171,7 @@ export const translations = {
     // Gallery Page
     galleryTitle: 'Multimedia Showcase',
     gallerySubtitle: 'Explore the beauty and luxury of Santillana Del Mar.',
+    galleryCatTour: 'Tour',
     galleryCatAerial: 'Aerial Views',
     galleryCatGate: 'Luxury Gate',
     galleryCatIslands: 'Private Islands',
@@ -181,6 +182,7 @@ export const translations = {
     expand: 'Expand',
     toastLinkCopied: 'Link Copied!',
     toastGalleryLinkCopied: 'A shareable link to the gallery has been copied.',
+    gallery_video_tour_title: 'Project Walkthrough Video',
     gallery_img_aerial_1_alt: 'Aerial view of the entire project',
     gallery_img_aerial_2_alt: 'Sunrise over the main lake',
     gallery_img_aerial_3_alt: 'Lush green areas from above',
@@ -437,6 +439,7 @@ export const translations = {
     // Gallery Page
     galleryTitle: 'Galería Multimedia',
     gallerySubtitle: 'Explora la belleza y el lujo de Santillana Del Mar.',
+    galleryCatTour: 'Recorrido',
     galleryCatAerial: 'Vistas Aéreas',
     galleryCatGate: 'Portería de Lujo',
     galleryCatIslands: 'Islas Privadas',
@@ -447,6 +450,7 @@ export const translations = {
     expand: 'Expandir',
     toastLinkCopied: '¡Enlace Copiado!',
     toastGalleryLinkCopied: 'Se ha copiado un enlace para compartir la galería.',
+    gallery_video_tour_title: 'Video Recorrido del Proyecto',
     gallery_img_aerial_1_alt: 'Vista aérea de todo el proyecto',
     gallery_img_aerial_2_alt: 'Amanecer sobre el lago principal',
     gallery_img_aerial_3_alt: 'Exuberantes áreas verdes desde arriba',

@@ -196,10 +196,18 @@ interface GalleryImage {
 interface GalleryCategory {
     key: string;
     nameKey: TranslationKey;
-    images: GalleryImage[];
+    images?: GalleryImage[];
+    videoUrl?: string;
+    videoTitleKey?: TranslationKey;
 }
 
 export const galleryCategories: GalleryCategory[] = [
+    {
+      key: 'tour',
+      nameKey: 'galleryCatTour',
+      videoUrl: 'https://www.youtube.com/embed/v09ECw109GY',
+      videoTitleKey: 'gallery_video_tour_title',
+    },
     {
       key: 'aerial',
       nameKey: 'galleryCatAerial',
@@ -259,6 +267,7 @@ export const galleryCategories: GalleryCategory[] = [
         ],
       },
   ];
+
 
 
 
