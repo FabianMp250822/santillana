@@ -37,7 +37,7 @@ export const translations = {
 
     // Home Page
     homeHeroTitle: 'Santillana Del Mar',
-    homeHeroSubtitle: 'Discover a sanctuary where luxury meets nature.',
+    homeHeroSubtitle: 'Your dream home where exclusivity meets nature.',
     homeHeroButton: 'Explore the Project',
     homeLifestyleTitle: 'An Unparalleled Lifestyle',
     homeLifestyleSubtitle: 'Santillana del Mar is more than a home; it\'s a destination. Experience a unique blend of comfort, elegance, and natural beauty.',
@@ -303,7 +303,7 @@ export const translations = {
     
     // Home Page
     homeHeroTitle: 'Santillana Del Mar',
-    homeHeroSubtitle: 'Descubre un santuario donde el lujo se encuentra con la naturaleza.',
+    homeHeroSubtitle: 'Tu hogar soñado donde la exclusividad se encuentra con la naturaleza.',
     homeHeroButton: 'Explorar el Proyecto',
     homeLifestyleTitle: 'Un Estilo de Vida Incomparable',
     homeLifestyleSubtitle: 'Santillana del Mar es más que un hogar; es un destino. Experimenta una mezcla única de confort, elegancia y belleza natural.',

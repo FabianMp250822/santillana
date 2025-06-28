@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Santillana Del Mar - Exclusive Real Estate Project',
-    description: 'Discover a sanctuary where luxury meets nature in Cartagena, Colombia.',
+    description: 'Your dream home where exclusivity meets nature in Cartagena, Colombia.',
     url: baseUrl,
     siteName: 'Santillana Del Mar',
     images: [
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Santillana Del Mar - Exclusive Real Estate Project',
-    description: 'Discover a sanctuary where luxury meets nature in Cartagena, Colombia.',
+    description: 'Your dream home where exclusivity meets nature in Cartagena, Colombia.',
     images: ['https://placehold.co/1200x630.png'],
   },
   robots: {
