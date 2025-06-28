@@ -204,8 +204,8 @@ export const galleryCategories: GalleryCategory[] = [
       key: 'aerial',
       nameKey: 'galleryCatAerial',
       images: [
-        { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_aerial_1_alt', hint: 'aerial project' },
-        { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_aerial_2_alt', hint: 'sunrise lake' },
+        { src: 'https://i.ibb.co/Pz9m9WkN/panoramica.jpg', altKey: 'gallery_img_aerial_1_alt', hint: 'aerial project' },
+        { src: 'https://i.ibb.co/8hPB0jB/panoramica-3.jpg', altKey: 'gallery_img_aerial_2_alt', hint: 'panoramic view' },
         { src: 'https://placehold.co/800x600.png', altKey: 'gallery_img_aerial_3_alt', hint: 'green aerial' },
       ],
     },
@@ -259,5 +259,6 @@ export const galleryCategories: GalleryCategory[] = [
         ],
       },
   ];
+
 
 
