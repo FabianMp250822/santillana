@@ -21,6 +21,7 @@ export function Footer() {
             <Link href="/gallery" className="text-sm text-muted-foreground hover:text-foreground">{t('navGallery')}</Link>
             <Link href="/amenities" className="text-sm text-muted-foreground hover:text-foreground">{t('navAmenities')}</Link>
             <Link href="/financing" className="text-sm text-muted-foreground hover:text-foreground">{t('navFinancing')}</Link>
+             <Link href="/policies" className="text-sm text-muted-foreground hover:text-foreground">{t('navPolicies')}</Link>
             <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground">{t('navContact')}</Link>
           </nav>
           <div className="flex items-center gap-2">
@@ -38,6 +39,7 @@ export function Footer() {
         </div>
         <div className="mt-8 text-center text-sm text-muted-foreground border-t border-border pt-4">
           <p>&copy; {new Date().getFullYear()} Santillana Del Mar. {t('allRightsReserved')}</p>
+          <p className="mt-1">SANTILLANA DEL MAR S.A.S NIT 901.868.325-2</p>
         </div>
       </div>
     </footer>

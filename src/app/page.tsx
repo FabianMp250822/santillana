@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTranslation } from '@/hooks/use-translation';
-import { ShieldCheck, Trees, Flame, Dribbble, Puzzle, Bike } from 'lucide-react';
+import { ShieldCheck, Trees, Waves, Dribbble, Puzzle, Footprints } from 'lucide-react';
 import Link from 'next/link';
 
 const features = [
@@ -18,9 +18,9 @@ const features = [
     descriptionKey: 'featurePrivateIslandsDesc',
   },
   {
-    icon: <Flame className="w-8 h-8 text-primary" />,
-    titleKey: 'featureBBQAreasTitle',
-    descriptionKey: 'featureBBQAreasDesc',
+    icon: <Waves className="w-8 h-8 text-primary" />,
+    titleKey: 'featurePoolTitle',
+    descriptionKey: 'featurePoolDesc',
   },
   {
     icon: <Dribbble className="w-8 h-8 text-primary" />,
@@ -33,9 +33,9 @@ const features = [
     descriptionKey: 'featurePlaygroundDesc',
   },
   {
-    icon: <Bike className="w-8 h-8 text-primary" />,
-    titleKey: 'featureBikePathGymTitle',
-    descriptionKey: 'featureBikePathGymDesc',
+    icon: <Footprints className="w-8 h-8 text-primary" />,
+    titleKey: 'featureTrailsAndGymTitle',
+    descriptionKey: 'featureTrailsAndGymDesc',
   },
 ];
 
@@ -112,7 +112,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      
       <section className="py-16 md:py-24 bg-background">
          <div className="container mx-auto px-4 text-center">
             <h2 className="font-headline text-3xl md:text-4xl font-bold">{t('homeCTA_Title')}</h2>

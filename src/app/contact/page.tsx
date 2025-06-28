@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, Building } from "lucide-react";
 import { useTranslation } from "@/hooks/use-translation";
 import { useState } from "react";
 import { db, isFirebaseConfigured } from "@/lib/firebase";
@@ -83,40 +83,66 @@ export default function ContactPage() {
 
   return (
     <div className="container mx-auto py-16 px-4">
-      <div className="text-center mb-8">
+      <div className="text-center mb-12">
         <h1 className="font-headline text-4xl md:text-5xl font-bold">{t('contactTitle')}</h1>
-        <p className="mt-2 text-lg text-muted-foreground">
+        <p className="mt-2 text-lg text-muted-foreground max-w-3xl mx-auto">
           {t('contactSubtitle')}
         </p>
       </div>
 
-      <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-start">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-start">
         <div className="space-y-8">
-            <div className="p-6 bg-card rounded-lg border">
-                <h3 className="font-headline text-2xl mb-4">{t('contactInfo')}</h3>
-                <div className="space-y-4 text-muted-foreground">
-                    <a href="tel:+573018698582" className="flex items-center gap-3 hover:text-primary transition-colors">
-                        <Phone className="w-5 h-5 text-primary" />
-                        <span>+57 301 869 8582</span>
-                    </a>
-                    <a href="mailto:gerenciacomercial@santillanadelmar.com" className="flex items-center gap-3 hover:text-primary transition-colors">
-                        <Mail className="w-5 h-5 text-primary" />
-                        <span>gerenciacomercial@santillanadelmar.com</span>
-                    </a>
-                    <p className="flex items-center gap-3">
-                        <MapPin className="w-5 h-5 text-primary" />
-                        <span>MANGA - AV. PRINCIPAL, Cartagena, Colombia</span>
+            <Card>
+                <CardHeader>
+                    <CardTitle className="font-headline text-2xl">{t('location')}</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4 text-muted-foreground">
+                   <p className="flex items-start gap-3">
+                        <MapPin className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                        <span>{t('locationDetail')}</span>
                     </p>
-                </div>
-            </div>
-            <div className="p-6 bg-card rounded-lg border">
-                 <h3 className="font-headline text-2xl mb-4">{t('workingHours')}</h3>
-                 <div className="space-y-2 text-muted-foreground">
-                    <p>{t('workingHours_Weekdays')}</p>
-                    <p>{t('workingHours_Saturday')}</p>
-                    <p>{t('workingHours_Sunday')}</p>
-                 </div>
-            </div>
+                    <p className="flex items-start gap-3">
+                        <Building className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                        <span><strong>{t('contactAddress')}:</strong> {t('contactNewAddress')}</span>
+                    </p>
+                </CardContent>
+            </Card>
+            <Card>
+                 <CardHeader>
+                    <CardTitle className="font-headline text-2xl">{t('contactInfo')}</CardTitle>
+                </CardHeader>
+                 <CardContent className="space-y-4 text-muted-foreground">
+                    <div>
+                        <h4 className="font-bold text-foreground">{t('contactSales')}</h4>
+                         <a href="tel:+573018698582" className="flex items-center gap-3 hover:text-primary transition-colors">
+                            <Phone className="w-5 h-5 text-primary" />
+                            <span>(+57) 301 869 8582</span>
+                        </a>
+                        <a href="mailto:santillanadelmar.comercial@gmail.com" className="flex items-center gap-3 hover:text-primary transition-colors">
+                            <Mail className="w-5 h-5 text-primary" />
+                            <span>santillanadelmar.comercial@gmail.com</span>
+                        </a>
+                    </div>
+                    <div>
+                        <h4 className="font-bold text-foreground mt-4">{t('contactAccounting')}</h4>
+                        <a href="tel:+573128709202" className="flex items-center gap-3 hover:text-primary transition-colors">
+                            <Phone className="w-5 h-5 text-primary" />
+                            <span>(+57) 312 870 9202</span>
+                        </a>
+                        <a href="mailto:santillanadelmar.contable@gmail.com" className="flex items-center gap-3 hover:text-primary transition-colors">
+                            <Mail className="w-5 h-5 text-primary" />
+                            <span>santillanadelmar.contable@gmail.com</span>
+                        </a>
+                    </div>
+                     <div>
+                        <h4 className="font-bold text-foreground mt-4">{t('contactManagement')}</h4>
+                        <a href="mailto:gerenciasantillanadelmar@gmail.com" className="flex items-center gap-3 hover:text-primary transition-colors">
+                            <Mail className="w-5 h-5 text-primary" />
+                            <span>gerenciasantillanadelmar@gmail.com</span>
+                        </a>
+                    </div>
+                 </CardContent>
+            </Card>
         </div>
         <Card>
             <CardHeader>

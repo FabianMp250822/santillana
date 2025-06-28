@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import { Home, Map, Images, User, Menu, X, LucideIcon, Sparkles, DollarSign, Mail, LogIn } from 'lucide-react';
+import { Home, Map, Images, User, Menu, X, LucideIcon, Sparkles, DollarSign, Mail, LogIn, Gavel } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { usePathname } from 'next/navigation';
@@ -24,6 +24,7 @@ const navLinks: NavLinkData[] = [
   { href: '/gallery', labelKey: 'navGallery', icon: Images },
   { href: '/amenities', labelKey: 'navAmenities', icon: Sparkles },
   { href: '/financing', labelKey: 'navFinancing', icon: DollarSign },
+  { href: '/policies', labelKey: 'navPolicies', icon: Gavel },
   { href: '/contact', labelKey: 'navContact', icon: Mail },
 ];
 
@@ -72,7 +73,7 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex gap-1">
+        <nav className="hidden lg:flex gap-1">
           {navLinks.map((link) => (
             <Link key={link.href} href={link.href} passHref>
               <Button variant={pathname === link.href ? 'secondary' : 'ghost'}>{t(link.labelKey)}</Button>
@@ -80,7 +81,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-2">
+        <div className="hidden lg:flex items-center gap-2">
            {loading ? (
              <Skeleton className="h-10 w-24" />
            ) : user ? (
@@ -101,7 +102,7 @@ export function Header() {
         </div>
 
         {/* Mobile Navigation */}
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">

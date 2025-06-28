@@ -81,6 +81,34 @@ export const amenities: Amenity[] = [
       hint: 'luxury gate security'
     },
     {
+      key: 'PrivateSurveillance',
+      nameKey: 'amenityPrivateSurveillance',
+      descriptionKey: 'amenityPrivateSurveillance_Desc',
+      image: 'https://placehold.co/800x600.png',
+      hint: 'security camera'
+    },
+    {
+      key: 'Pool',
+      nameKey: 'amenityPool',
+      descriptionKey: 'amenityPool_Desc',
+      image: 'https://placehold.co/800x600.png',
+      hint: 'family pool'
+    },
+    {
+      key: 'Lake',
+      nameKey: 'amenityLake',
+      descriptionKey: 'amenityLake_Desc',
+      image: 'https://placehold.co/800x600.png',
+      hint: 'lake dock'
+    },
+    {
+      key: 'Fishing',
+      nameKey: 'amenityRecreationalFishing',
+      descriptionKey: 'amenityRecreationalFishing_Desc',
+      image: 'https://placehold.co/800x600.png',
+      hint: 'recreational fishing'
+    },
+    {
       key: 'PrivateIslands',
       nameKey: 'featurePrivateIslandsTitle',
       descriptionKey: 'amenityPrivateIslands_Desc',
@@ -88,18 +116,11 @@ export const amenities: Amenity[] = [
       hint: 'private island tropical'
     },
     {
-      key: 'BBQAreas',
-      nameKey: 'featureBBQAreasTitle',
-      descriptionKey: 'amenityBBQ_Desc',
+      key: 'Playground',
+      nameKey: 'featurePlaygroundTitle',
+      descriptionKey: 'amenityPlayground_Desc',
       image: 'https://placehold.co/800x600.png',
-      hint: 'bbq area family'
-    },
-    {
-      key: 'TennisCourt',
-      nameKey: 'amenityTennisCourt',
-      descriptionKey: 'amenityTennis_Desc',
-      image: 'https://placehold.co/800x600.png',
-      hint: 'tennis court sport'
+      hint: 'playground park'
     },
     {
       key: 'MultiPurposeCourt',
@@ -109,26 +130,61 @@ export const amenities: Amenity[] = [
       hint: 'basketball court sports'
     },
     {
-      key: 'Playground',
-      nameKey: 'featurePlaygroundTitle',
-      descriptionKey: 'amenityPlayground_Desc',
+      key: 'ReadingZone',
+      nameKey: 'amenityReadingZone',
+      descriptionKey: 'amenityReadingZone_Desc',
       image: 'https://placehold.co/800x600.png',
-      hint: 'playground park children'
+      hint: 'reading park'
     },
     {
-      key: 'BikePath',
-      nameKey: 'featureBikePathGymTitle',
-      descriptionKey: 'amenityBikePath_Desc',
+      key: 'VisitorParking',
+      nameKey: 'amenityVisitorParking',
+      descriptionKey: 'amenityVisitorParking_Desc',
       image: 'https://placehold.co/800x600.png',
-      hint: 'bike path nature'
+      hint: 'parking lot'
     },
     {
-      key: 'OutdoorGym',
-      nameKey: 'amenityOutdoorGym_Desc',
-      descriptionKey: 'amenityOutdoorGym_Desc',
+      key: 'PedestrianPaths',
+      nameKey: 'amenityPedestrianPaths',
+      descriptionKey: 'amenityPedestrianPaths_Desc',
       image: 'https://placehold.co/800x600.png',
-      hint: 'outdoor gym fitness'
-    }
+      hint: 'walking trail nature'
+    },
+    {
+      key: 'PetPark',
+      nameKey: 'amenityPetPark',
+      descriptionKey: 'amenityPetPark_Desc',
+      image: 'https://placehold.co/800x600.png',
+      hint: 'pet park dog'
+    },
+    {
+      key: 'AcLounge',
+      nameKey: 'amenityAcLounge',
+      descriptionKey: 'amenityAcLounge_Desc',
+      image: 'https://placehold.co/800x600.png',
+      hint: 'lounge interior modern'
+    },
+    {
+      key: 'BioHealthyGym',
+      nameKey: 'amenityBioHealthyGym',
+      descriptionKey: 'amenityBioHealthyGym_Desc',
+      image: 'https://placehold.co/800x600.png',
+      hint: 'outdoor gym'
+    },
+    {
+      key: 'ConnectorBridge',
+      nameKey: 'amenityConnectorBridge',
+      descriptionKey: 'amenityConnectorBridge_Desc',
+      image: 'https://placehold.co/800x600.png',
+      hint: 'bridge water'
+    },
+    {
+      key: 'TreetopTerrace',
+      nameKey: 'amenityTreetopTerrace',
+      descriptionKey: 'amenityTreetopTerrace_Desc',
+      image: 'https://placehold.co/800x600.png',
+      hint: 'treehouse terrace view'
+    },
 ];
 
 interface GalleryImage {
