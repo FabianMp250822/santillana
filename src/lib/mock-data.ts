@@ -161,8 +161,8 @@ export const amenities: Amenity[] = [
       key: 'AcLounge',
       nameKey: 'amenityAcLounge',
       descriptionKey: 'amenityAcLounge_Desc',
-      image: 'https://i.ibb.co/TxNzY4db/zona-social.jpg',
-      hint: 'lounge interior modern'
+      image: 'https://i.ibb.co/HTDKqhFj/comedor-social.jpg',
+      hint: 'social dining lounge'
     },
     {
       key: 'BioHealthyGym',
@@ -247,7 +247,7 @@ export const galleryCategories: GalleryCategory[] = [
         images: [
           { src: 'https://i.ibb.co/DfKs3xh8/recreacion.jpg', altKey: 'gallery_img_sports_1_alt', hint: 'sports court' },
           { src: 'https://i.ibb.co/ZRVb3W4B/ginnacio-area-libre.jpg', altKey: 'gallery_img_sports_2_alt', hint: 'outdoor gym' },
-          { src: 'https://i.ibb.co/TxNzY4db/zona-social.jpg', altKey: 'gallery_img_sports_3_alt', hint: 'social area' },
+          { src: 'https://i.ibb.co/HTDKqhFj/comedor-social.jpg', altKey: 'gallery_img_sports_3_alt', hint: 'social dining' },
         ],
       },
       {
@@ -268,6 +268,7 @@ export const galleryCategories: GalleryCategory[] = [
         ],
       },
   ];
+
 
 
 
